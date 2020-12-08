@@ -1,4 +1,4 @@
-# Data-science: Dialect map API
+# Dialect map API
 
 ### About
 This repository contains the web server to access the database information.
