@@ -26,6 +26,7 @@ $ psql --dbname=postgres
 postgres=# CREATE USER dm;
 postgres=# ALTER USER dm WITH PASSWORD 'dmpwd';
 postgres=# CREATE DATABASE dialect_map WITH OWNER dm;
+postgres=# \q
 ```
 
 #### 4. Create the database tables

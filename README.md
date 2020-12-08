@@ -24,12 +24,6 @@ in the `pyproject.toml` file.
 make check
 ```
 
-### Testing
-Project testing is performed using [Pytest][pytest-web]. In order to run the tests:
-```sh
-make test
-```
-
 
 ### Docker
 There is a `Makefile` to perform both Docker `build` and `push` operations.
@@ -65,6 +59,5 @@ This project uses a set of env. variables to configure certain aspects of the AP
 
 
 [black-web]: https://black.readthedocs.io/en/stable/
-[pytest-web]: https://docs.pytest.org/en/latest/#
 [dialect-map-ui]: https://github.com/ds3-nyu-archive/ds-dialect-map-ui
 [gcloud-cli-setup]: https://cloud.google.com/sdk/docs/install
