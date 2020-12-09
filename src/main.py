@@ -24,11 +24,11 @@ def setup_routes():
 def setup_errors():
     """ Setup all the Flask exception handlers """
 
-    from exceptions import not_found_request
-    from exceptions import internal_error
+    from handlers import error_mappings
 
-    app.register_error_handler(ValueError, not_found_request)
-    app.register_error_handler(Exception, internal_error)
+    for mapping in error_mappings:
+        for error in mapping["errors"]:
+            app.register_error_handler(error, mapping["handler"])
 
 
 # Gunicorn running the server
