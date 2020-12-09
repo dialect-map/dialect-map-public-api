@@ -37,7 +37,8 @@ def create_paper():
     :return: HTTP 201 response
     """
 
-    paper = Paper(request.json)
+    json = request.json
+    paper = Paper(**json)
     resp = service.papers.create(paper)
     return make_response({"id": resp}, 201)
 
@@ -102,7 +103,8 @@ def create_paper_author():
     :return: HTTP 201 response
     """
 
-    author = PaperAuthor(request.json)
+    json = request.json
+    author = PaperAuthor(**json)
     resp = service.paper_authors.create(author)
     return make_response({"id": resp}, 201)
 
@@ -154,7 +156,8 @@ def create_ref_counter():
     :return: HTTP 201 response
     """
 
-    counter = PaperReferenceCounters(request.json)
+    json = request.json
+    counter = PaperReferenceCounters(**json)
     resp = service.paper_ref_counters.create(counter)
     return make_response({"id": resp}, 201)
 

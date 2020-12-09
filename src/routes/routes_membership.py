@@ -31,7 +31,8 @@ def create_membership():
     :return: HTTP 201 response
     """
 
-    membership = CategoryMembership(request.json)
+    json = request.json
+    membership = CategoryMembership(**json)
     resp = service.category_memberships.create(membership)
     return make_response({"id": resp}, 201)
 

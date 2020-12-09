@@ -57,7 +57,8 @@ def create_reference():
     :return: HTTP 201 response
     """
 
-    ref = PaperReference(request.json)
+    json = request.json
+    ref = PaperReference(**json)
     resp = service.paper_refs.create(ref)
     return make_response({"id": resp}, 201)
 

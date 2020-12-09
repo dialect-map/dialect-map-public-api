@@ -53,7 +53,8 @@ def create_jargon():
     :return: HTTP 201 response
     """
 
-    jargon = Jargon(request.json)
+    json = request.json
+    jargon = Jargon(**json)
     resp = service.jargons.create(jargon)
     return make_response({"id": resp}, 201)
 

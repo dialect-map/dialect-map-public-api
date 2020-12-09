@@ -31,7 +31,8 @@ def create_category():
     :return: HTTP 201 response
     """
 
-    cat = Category(request.json)
+    json = request.json
+    cat = Category(**json)
     resp = service.categories.create(cat)
     return make_response({"id": resp}, 201)
 

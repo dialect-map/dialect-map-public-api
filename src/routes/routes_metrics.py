@@ -48,7 +48,8 @@ def create_cat_metrics():
     :return: HTTP 201 response
     """
 
-    metric = JargonCategoryMetrics(request.json)
+    json = request.json
+    metric = JargonCategoryMetrics(**json)
     resp = service.jargon_cat_metrics.create(metric)
     return make_response({"id": resp}, 201)
 
@@ -113,7 +114,8 @@ def create_paper_metrics():
     :return: HTTP 201 response
     """
 
-    metric = JargonPaperMetrics(request.json)
+    json = request.json
+    metric = JargonPaperMetrics(**json)
     resp = service.jargon_paper_metrics.create(metric)
     return make_response({"id": resp}, 201)
 
