@@ -12,6 +12,16 @@ app = Flask(__name__)
 cors = CORS(app, methods=["GET"])
 
 
+def setup_encoding():
+    """ Setup the Flask encoding / decoding classes """
+
+    from dialect_map.encoding import CustomJSONDecoder
+    from dialect_map.encoding import CustomJSONEncoder
+
+    app.json_decoder = CustomJSONDecoder
+    app.json_encoder = CustomJSONEncoder
+
+
 def setup_routes():
     """ Setup all the Flask blueprint routes """
 
@@ -37,9 +47,11 @@ if __name__ == "main":
     loader = EnvironmentConfigLoader()
     config = ApplicationConfig(loader)
 
-    # Setup order must be preserved
+    # Setup the logger first
     setup_logger(config.log_level)
     setup_service(c=config)
+
+    setup_encoding()
     setup_routes()
     setup_errors()
 
@@ -50,8 +62,10 @@ if __name__ == "__main__":
     loader = EnvironmentConfigLoader()
     config = ApplicationConfig(loader)
 
-    # Setup order must be preserved
+    # Setup the logger first
     setup_logger(config.log_level)
     setup_service(c=config)
+
+    setup_encoding()
     setup_routes()
     setup_errors()
