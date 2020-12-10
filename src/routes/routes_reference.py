@@ -2,7 +2,6 @@
 
 from flask import Blueprint
 from flask import jsonify
-from flask import make_response
 from flask import request
 from globals import service
 
@@ -21,11 +20,11 @@ def get_reference(reference_id: str):
     """
 
     record = service.paper_refs.get(reference_id)
-    return make_response(jsonify(record), 200)
+    return jsonify(record.data), 200
 
 
 @bp.route("/references/source/<paper_id>/<paper_rev>", methods=["GET"])
-def get_reference_by_source_paper(paper_id: str, paper_rev: int):
+def get_references_by_source_paper(paper_id: str, paper_rev: int):
     """
     Gets a paper reference from the underlying database
     :param paper_id: ID of the source paper references
@@ -33,12 +32,13 @@ def get_reference_by_source_paper(paper_id: str, paper_rev: int):
     :return: HTTP 200 response
     """
 
-    record = service.paper_refs.get_by_source_paper(paper_id, paper_rev)
-    return make_response(jsonify(record), 200)
+    records = service.paper_refs.get_by_source_paper(paper_id, paper_rev)
+    records_data = [record.data for record in records]
+    return jsonify(records_data), 200
 
 
 @bp.route("/references/target/<paper_id>/<paper_rev>", methods=["GET"])
-def get_reference_by_target_paper(paper_id: str, paper_rev: int):
+def get_references_by_target_paper(paper_id: str, paper_rev: int):
     """
     Gets a paper reference from the underlying database
     :param paper_id: ID of the target paper references
@@ -46,8 +46,9 @@ def get_reference_by_target_paper(paper_id: str, paper_rev: int):
     :return: HTTP 200 response
     """
 
-    record = service.paper_refs.get_by_target_paper(paper_id, paper_rev)
-    return make_response(jsonify(record), 200)
+    records = service.paper_refs.get_by_target_paper(paper_id, paper_rev)
+    records_data = [record.data for record in records]
+    return jsonify(records_data), 200
 
 
 @bp.route("/reference", methods=["POST"])
@@ -57,9 +58,10 @@ def create_reference():
     :return: HTTP 201 response
     """
 
-    ref = PaperReference(request.json)
+    json = request.json
+    ref = PaperReference(**json)
     resp = service.paper_refs.create(ref)
-    return make_response({"id": resp}, 201)
+    return jsonify({"id": resp}), 201
 
 
 @bp.route("/reference/<reference_id>", methods=["DELETE"])
@@ -71,4 +73,4 @@ def delete_reference(reference_id: str):
     """
 
     service.paper_refs.delete(reference_id)
-    return make_response(jsonify({}), 204)
+    return jsonify({}), 204

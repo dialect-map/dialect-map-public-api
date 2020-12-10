@@ -12,6 +12,16 @@ app = Flask(__name__)
 cors = CORS(app, methods=["GET"])
 
 
+def setup_encoding():
+    """ Setup the Flask encoding / decoding classes """
+
+    from dialect_map.encoding import CustomJSONDecoder
+    from dialect_map.encoding import CustomJSONEncoder
+
+    app.json_decoder = CustomJSONDecoder
+    app.json_encoder = CustomJSONEncoder
+
+
 def setup_routes():
     """ Setup all the Flask blueprint routes """
 
@@ -24,11 +34,11 @@ def setup_routes():
 def setup_errors():
     """ Setup all the Flask exception handlers """
 
-    from exceptions import not_found_request
-    from exceptions import internal_error
+    from handlers import error_mappings
 
-    app.register_error_handler(ValueError, not_found_request)
-    app.register_error_handler(Exception, internal_error)
+    for mapping in error_mappings:
+        for error in mapping["errors"]:
+            app.register_error_handler(error, mapping["handler"])
 
 
 # Gunicorn running the server
@@ -37,9 +47,11 @@ if __name__ == "main":
     loader = EnvironmentConfigLoader()
     config = ApplicationConfig(loader)
 
-    # Setup order must be preserved
+    # Setup the logger first
     setup_logger(config.log_level)
     setup_service(c=config)
+
+    setup_encoding()
     setup_routes()
     setup_errors()
 
@@ -50,8 +62,10 @@ if __name__ == "__main__":
     loader = EnvironmentConfigLoader()
     config = ApplicationConfig(loader)
 
-    # Setup order must be preserved
+    # Setup the logger first
     setup_logger(config.log_level)
     setup_service(c=config)
+
+    setup_encoding()
     setup_routes()
     setup_errors()
