@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from dialect_map.models import JargonCategoryMetrics
-from dialect_map.models import JargonPaperMetrics
-
 from flask import Blueprint
 from flask import jsonify
-from flask import make_response
 from flask import request
 from globals import service
+
+from dialect_map.models import JargonCategoryMetrics
+from dialect_map.models import JargonPaperMetrics
 
 
 bp = Blueprint("metrics", __name__)
@@ -25,7 +24,7 @@ def get_cat_metrics(metric_id: str):
     """
 
     record = service.jargon_cat_metrics.get(metric_id)
-    return make_response(jsonify(record), 200)
+    return jsonify(record.data), 200
 
 
 @bp.route("/category/<category_id>/metrics/jargon/<jargon_id>", methods=["GET"])
@@ -38,7 +37,8 @@ def get_cat_metrics_by_jargon(jargon_id: str, category_id: str = None):
     """
 
     records = service.jargon_cat_metrics.get_by_jargon(jargon_id, category_id)
-    return make_response(jsonify(records), 200)
+    records_data = [record.data for record in records]
+    return jsonify(records_data), 200
 
 
 @bp.route("/category/metrics", methods=["POST"])
@@ -51,7 +51,7 @@ def create_cat_metrics():
     json = request.json
     metric = JargonCategoryMetrics(**json)
     resp = service.jargon_cat_metrics.create(metric)
-    return make_response({"id": resp}, 201)
+    return jsonify({"id": resp}), 201
 
 
 @bp.route("/category/metrics/<metric_id>", methods=["DELETE"])
@@ -63,7 +63,7 @@ def delete_cat_metrics(metric_id: str):
     """
 
     service.jargon_cat_metrics.delete(metric_id)
-    return make_response(jsonify({}), 204)
+    return jsonify({}), 204
 
 
 # ----------- Paper Jargon Metrics model ----------- #
@@ -78,7 +78,7 @@ def get_paper_metrics(metric_id: str):
     """
 
     record = service.jargon_paper_metrics.get(metric_id)
-    return make_response(jsonify(record), 200)
+    return jsonify(record.data), 200
 
 
 @bp.route("/paper/<paper_id>/<paper_rev>/metrics/jargon/<jargon_id>", methods=["GET"])
@@ -92,7 +92,8 @@ def get_paper_metrics_by_jargon(jargon_id: str, paper_id: str = None, paper_rev:
     """
 
     records = service.jargon_paper_metrics.get_by_jargon(jargon_id, paper_id, paper_rev)
-    return make_response(jsonify(records), 200)
+    records_data = [record.data for record in records]
+    return jsonify(records_data), 200
 
 
 @bp.route("/paper/metrics/latest/<jargon_id>", methods=["GET"])
@@ -104,7 +105,8 @@ def get_latest_paper_metrics(jargon_id: str):
     """
 
     records = service.jargon_paper_metrics.get_latest_by_jargon(jargon_id)
-    return make_response(jsonify(records), 200)
+    records_data = [record.data for record in records]
+    return jsonify(records_data), 200
 
 
 @bp.route("/paper/metrics", methods=["POST"])
@@ -117,7 +119,7 @@ def create_paper_metrics():
     json = request.json
     metric = JargonPaperMetrics(**json)
     resp = service.jargon_paper_metrics.create(metric)
-    return make_response({"id": resp}, 201)
+    return jsonify({"id": resp}), 201
 
 
 @bp.route("/paper/metrics/<metric_id>", methods=["DELETE"])
@@ -129,4 +131,4 @@ def delete_paper_metrics(metric_id: str):
     """
 
     service.jargon_paper_metrics.delete(metric_id)
-    return make_response(jsonify({}), 204)
+    return jsonify({}), 204

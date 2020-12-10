@@ -2,7 +2,6 @@
 
 from flask import Blueprint
 from flask import jsonify
-from flask import make_response
 from flask import request
 from globals import service
 
@@ -21,7 +20,7 @@ def get_membership(membership_id: str):
     """
 
     record = service.category_memberships.get(membership_id)
-    return make_response(jsonify(record), 200)
+    return jsonify(record.data), 200
 
 
 @bp.route("/membership", methods=["POST"])
@@ -34,7 +33,7 @@ def create_membership():
     json = request.json
     membership = CategoryMembership(**json)
     resp = service.category_memberships.create(membership)
-    return make_response({"id": resp}, 201)
+    return {"id": resp}, 201
 
 
 @bp.route("/membership/<membership_id>", methods=["DELETE"])
@@ -46,4 +45,4 @@ def delete_membership(membership_id: str):
     """
 
     service.category_memberships.delete(membership_id)
-    return make_response(jsonify({}), 204)
+    return jsonify({}), 204

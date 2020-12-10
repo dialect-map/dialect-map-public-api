@@ -2,7 +2,6 @@
 
 from flask import Blueprint
 from flask import jsonify
-from flask import make_response
 from flask import request
 from globals import service
 
@@ -27,7 +26,7 @@ def get_paper(paper_id: str, paper_rev: int):
     """
 
     record = service.papers.get(paper_id, paper_rev)
-    return make_response(jsonify(record), 200)
+    return jsonify(record.data), 200
 
 
 @bp.route("/paper", methods=["POST"])
@@ -40,7 +39,7 @@ def create_paper():
     json = request.json
     paper = Paper(**json)
     resp = service.papers.create(paper)
-    return make_response({"id": resp}, 201)
+    return jsonify({"id": resp}), 201
 
 
 @bp.route("/paper/<paper_id>", methods=["DELETE"])
@@ -52,7 +51,7 @@ def delete_paper(paper_id: str):
     """
 
     service.papers.delete(paper_id)
-    return make_response(jsonify({}), 204)
+    return jsonify({}), 204
 
 
 @bp.route("/paper/<paper_id>/<paper_rev>", methods=["DELETE"])
@@ -65,7 +64,7 @@ def delete_paper_rev(paper_id: str, paper_rev: int):
     """
 
     service.papers.delete_rev(paper_id, paper_rev)
-    return make_response(jsonify({}), 204)
+    return jsonify({}), 204
 
 
 # ---------------- Paper Author model ---------------- #
@@ -80,7 +79,7 @@ def get_paper_author(author_id: str):
     """
 
     record = service.paper_authors.get(author_id)
-    return make_response(jsonify(record), 200)
+    return jsonify(record.data), 200
 
 
 @bp.route("/paper/<paper_id>/<paper_rev>/authors", methods=["GET"])
@@ -93,7 +92,8 @@ def get_paper_authors_by_paper(paper_id: str, paper_rev: int):
     """
 
     records = service.paper_authors.get_by_paper(paper_id, paper_rev)
-    return make_response(jsonify(records), 200)
+    records_data = [record.data for record in records]
+    return jsonify(records_data), 200
 
 
 @bp.route("/paper/author", methods=["POST"])
@@ -106,7 +106,7 @@ def create_paper_author():
     json = request.json
     author = PaperAuthor(**json)
     resp = service.paper_authors.create(author)
-    return make_response({"id": resp}, 201)
+    return jsonify({"id": resp}), 201
 
 
 @bp.route("/paper/author/<author_id>", methods=["DELETE"])
@@ -118,7 +118,7 @@ def delete_paper_author(author_id: str):
     """
 
     service.paper_authors.delete(author_id)
-    return make_response(jsonify({}), 204)
+    return jsonify({}), 204
 
 
 # --------------- Paper Ref Counters model --------------- #
@@ -133,7 +133,7 @@ def get_ref_counter(counter_id: str):
     """
 
     record = service.paper_ref_counters.get(counter_id)
-    return make_response(jsonify(record), 200)
+    return jsonify(record.data), 200
 
 
 @bp.route("/paper/<paper_id>/<paper_rev>/reference/counters", methods=["GET"])
@@ -146,7 +146,8 @@ def get_ref_counter_by_paper(paper_id: str, paper_rev: int):
     """
 
     records = service.paper_ref_counters.get_by_paper(paper_id, paper_rev)
-    return make_response(jsonify(records), 200)
+    records_data = [record.data for record in records]
+    return jsonify(records_data), 200
 
 
 @bp.route("/paper/reference/counters", methods=["POST"])
@@ -159,7 +160,7 @@ def create_ref_counter():
     json = request.json
     counter = PaperReferenceCounters(**json)
     resp = service.paper_ref_counters.create(counter)
-    return make_response({"id": resp}, 201)
+    return jsonify({"id": resp}), 201
 
 
 @bp.route("/paper/reference/counters/<counter_id>", methods=["DELETE"])
@@ -171,4 +172,4 @@ def delete_ref_counter(counter_id: str):
     """
 
     service.paper_ref_counters.delete(counter_id)
-    return make_response(jsonify({}), 204)
+    return jsonify({}), 204
