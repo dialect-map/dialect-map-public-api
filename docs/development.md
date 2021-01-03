@@ -45,7 +45,7 @@ $ export DIALECT_MAP_DB_URL=postgresql+psycopg2://dm:dmpwd@localhost/dialect_map
 
 #### 2. Run the server
 ```sh
-$ ./scripts/start_flask.sh
+$ . scripts/start_flask.sh
 ```
 
 
