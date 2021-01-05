@@ -40,9 +40,9 @@ def get_jargon_by_string(jargon_str: str):
     record = service.jargons.get_by_string(string)
 
     if record:
-        return jsonify(record), 200
+        return jsonify(record.data), 200
     else:
-        return jsonify(record), 404
+        return jsonify({}), 404
 
 
 @bp.route("/jargon", methods=["POST"])
