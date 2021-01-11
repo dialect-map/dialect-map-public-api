@@ -1,5 +1,5 @@
 APP_VERSION    = $(shell cat VERSION)
-IMAGE_NAME     = "dialect-map-api"
+IMAGE_NAME     = "dialect-map-public-api"
 SOURCE_FOLDER  = "src"
 TYPING_PARAMS  = "--allow-redefinition --ignore-missing-imports --cache-dir=/dev/null"
 
