@@ -7,6 +7,7 @@ from globals import service
 from urllib import parse
 
 from dialect_map.models import Jargon
+from dialect_map.models import JargonGroup
 
 
 bp = Blueprint("jargons", __name__)
@@ -67,4 +68,44 @@ def delete_jargon(jargon_id: str):
     """
 
     service.jargons.delete(jargon_id)
+    return jsonify({}), 204
+
+
+# ---------------- Jargon Group model ---------------- #
+
+
+@bp.route("/jargon-group/<group_id>", methods=["GET"])
+def get_jargon_group(group_id: str):
+    """
+    Gets a jargon group from the underlying database
+    :param group_id: ID of the jargon group to get
+    :return: HTTP 200 response
+    """
+
+    record = service.jargon_groups.get(group_id)
+    return jsonify(record.data), 200
+
+
+@bp.route("/jargon-group", methods=["POST"])
+def create_jargon_group():
+    """
+    Creates a jargon group with the provided JSON body
+    :return: HTTP 201 response
+    """
+
+    json = request.json
+    group = JargonGroup(**json)
+    resp = service.jargon_groups.create(group)
+    return jsonify({"id": resp}), 201
+
+
+@bp.route("/jargon-group/<group_id>", methods=["DELETE"])
+def delete_jargon_group(group_id: str):
+    """
+    Deletes a jargon group from the underlying database
+    :param group_id: ID of the jargon group to delete
+    :return: HTTP 204 response
+    """
+
+    service.jargon_groups.delete(group_id)
     return jsonify({}), 204
