@@ -1,4 +1,4 @@
-# Dialect map API
+# Dialect map public API
 
 ### About
 This repository contains the web server to access the database information.
