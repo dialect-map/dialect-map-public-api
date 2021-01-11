@@ -2,12 +2,7 @@
 
 from flask import Blueprint
 from flask import jsonify
-from flask import request
 from globals import service
-
-from dialect_map.models import Paper
-from dialect_map.models import PaperAuthor
-from dialect_map.models import PaperReferenceCounters
 
 
 bp = Blueprint("papers", __name__)
@@ -27,44 +22,6 @@ def get_paper(paper_id: str, paper_rev: int):
 
     record = service.papers.get(paper_id, paper_rev)
     return jsonify(record.data), 200
-
-
-@bp.route("/paper", methods=["POST"])
-def create_paper():
-    """
-    Creates a paper with the provided JSON body
-    :return: HTTP 201 response
-    """
-
-    json = request.json
-    paper = Paper(**json)
-    resp = service.papers.create(paper)
-    return jsonify({"id": resp}), 201
-
-
-@bp.route("/paper/<paper_id>", methods=["DELETE"])
-def delete_paper(paper_id: str):
-    """
-    Deletes a paper from the underlying database
-    :param paper_id: ID of the paper to delete
-    :return: HTTP 204 response
-    """
-
-    service.papers.delete(paper_id)
-    return jsonify({}), 204
-
-
-@bp.route("/paper/<paper_id>/<paper_rev>", methods=["DELETE"])
-def delete_paper_rev(paper_id: str, paper_rev: int):
-    """
-    Deletes a paper from the underlying database
-    :param paper_id: ID of the paper to delete
-    :param paper_rev: revision of the paper to delete
-    :return: HTTP 204 response
-    """
-
-    service.papers.delete_rev(paper_id, paper_rev)
-    return jsonify({}), 204
 
 
 # ---------------- Paper Author model ---------------- #
@@ -96,31 +53,6 @@ def get_paper_authors_by_paper(paper_id: str, paper_rev: int):
     return jsonify(records_data), 200
 
 
-@bp.route("/paper/author", methods=["POST"])
-def create_paper_author():
-    """
-    Creates a paper author with the provided JSON body
-    :return: HTTP 201 response
-    """
-
-    json = request.json
-    author = PaperAuthor(**json)
-    resp = service.paper_authors.create(author)
-    return jsonify({"id": resp}), 201
-
-
-@bp.route("/paper/author/<author_id>", methods=["DELETE"])
-def delete_paper_author(author_id: str):
-    """
-    Deletes a paper author from the underlying database
-    :param author_id: ID of the paper author to delete
-    :return: HTTP 204 response
-    """
-
-    service.paper_authors.delete(author_id)
-    return jsonify({}), 204
-
-
 # --------------- Paper Ref Counters model --------------- #
 
 
@@ -148,28 +80,3 @@ def get_ref_counter_by_paper(paper_id: str, paper_rev: int):
     records = service.paper_ref_counters.get_by_paper(paper_id, paper_rev)
     records_data = [record.data for record in records]
     return jsonify(records_data), 200
-
-
-@bp.route("/paper/reference/counters", methods=["POST"])
-def create_ref_counter():
-    """
-    Creates a paper ref. counter with the provided JSON body
-    :return: HTTP 201 response
-    """
-
-    json = request.json
-    counter = PaperReferenceCounters(**json)
-    resp = service.paper_ref_counters.create(counter)
-    return jsonify({"id": resp}), 201
-
-
-@bp.route("/paper/reference/counters/<counter_id>", methods=["DELETE"])
-def delete_ref_counter(counter_id: str):
-    """
-    Deletes a paper ref. counter from the underlying database
-    :param counter_id: ID of the paper ref. counter to delete
-    :return: HTTP 204 response
-    """
-
-    service.paper_ref_counters.delete(counter_id)
-    return jsonify({}), 204

@@ -2,10 +2,7 @@
 
 from flask import Blueprint
 from flask import jsonify
-from flask import request
 from globals import service
-
-from dialect_map.models import CategoryMembership
 
 
 bp = Blueprint("memberships", __name__)
@@ -21,28 +18,3 @@ def get_membership(membership_id: str):
 
     record = service.category_memberships.get(membership_id)
     return jsonify(record.data), 200
-
-
-@bp.route("/membership", methods=["POST"])
-def create_membership():
-    """
-    Creates a membership with the provided JSON body
-    :return: HTTP 201 response
-    """
-
-    json = request.json
-    membership = CategoryMembership(**json)
-    resp = service.category_memberships.create(membership)
-    return {"id": resp}, 201
-
-
-@bp.route("/membership/<membership_id>", methods=["DELETE"])
-def delete_membership(membership_id: str):
-    """
-    Deletes a membership from the underlying database
-    :param membership_id: ID of the membership to delete
-    :return: HTTP 200 response
-    """
-
-    service.category_memberships.delete(membership_id)
-    return jsonify({}), 204
