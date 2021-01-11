@@ -46,6 +46,18 @@ def get_jargon_by_string(jargon_str: str):
         return jsonify({}), 404
 
 
+@bp.route("/jargon/groups", methods=["GET"])
+def get_jargon_by_group():
+    """
+    Gets a jargon group from the underlying database
+    :return: HTTP 200 response
+    """
+
+    groups = service.jargons.get_by_group()
+    groups = [[record.data for record in g] for g in groups]
+    return jsonify(groups), 200
+
+
 @bp.route("/jargon", methods=["POST"])
 def create_jargon():
     """
