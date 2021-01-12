@@ -59,5 +59,5 @@ This project uses a set of env. variables to configure certain aspects of the AP
 
 
 [black-web]: https://black.readthedocs.io/en/stable/
-[dialect-map-ui]: https://github.com/ds3-nyu-archive/ds-dialect-map-ui
+[dialect-map-ui]: https://github.com/dialect-map/dialect-map-ui
 [gcloud-cli-setup]: https://cloud.google.com/sdk/docs/install
