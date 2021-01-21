@@ -12,8 +12,9 @@ def setup_logger(log_level: str):
     """
 
     log_format = logging.Formatter(
-        fmt="%(asctime)s - %(levelname)s - %(message)s",
+        fmt="{asctime} - {levelname} - {message}",
         datefmt="%Y-%m-%d %H:%M:%S",
+        style="{",
     )
 
     log_handler = logging.StreamHandler()
