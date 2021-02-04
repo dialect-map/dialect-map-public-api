@@ -1,5 +1,3 @@
-# syntax=docker/dockerfile:1.0.0-experimental
-
 # Base image
 FROM python:3.7-slim
 
