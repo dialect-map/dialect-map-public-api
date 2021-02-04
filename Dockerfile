@@ -23,7 +23,7 @@ RUN --mount=type=ssh \
     pip install --no-cache-dir --requirement requirements.txt
 
 
-# Tell Docker about the port `serve` will expose on
+# Tell Docker about the port the application will expose
 EXPOSE 8080
 
 # Start server
