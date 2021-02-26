@@ -4,4 +4,4 @@ flask_cors==3.0.9
 gunicorn==20.0.4
 
 # Private packages
-git+ssh://git@github.com/dialect-map/dialect-map-core.git@v0.2.2#egg=dialect-map-core
+git+ssh://git@github.com/dialect-map/dialect-map-core.git@v0.3.0#egg=dialect-map-core
