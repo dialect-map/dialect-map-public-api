@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import os
-from abc import ABCMeta
+from abc import ABC
 from abc import abstractmethod
 from typing import Any
 from typing import Union
 
 
-class ConfigLoader(metaclass=ABCMeta):
+class ConfigLoader(ABC):
     """ Interface for configuration loader classes """
 
     @abstractmethod
