@@ -8,7 +8,7 @@ from globals import service
 bp = Blueprint("memberships", __name__)
 
 
-@bp.route("/membership/<membership_id>", methods=["GET"])
+@bp.route("/category/membership/<membership_id>", methods=["GET"])
 def get_membership(membership_id: str):
     """
     Gets a membership from the underlying database
