@@ -18,7 +18,7 @@ make install-dev
 
 
 ### Formatting
-All Python files are formatted using [Black][black-web],  and the custom properties defined
+All Python files are formatted using [Black][black-web], and the custom properties defined
 in the `pyproject.toml` file.
 ```sh
 make check
