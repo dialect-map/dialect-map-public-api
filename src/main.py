@@ -31,7 +31,7 @@ def setup_routes():
         app.register_blueprint(bp)
 
 
-def setup_errors():
+def setup_errors_handlers():
     """ Setup all the Flask exception handlers """
 
     from handlers import error_mappings
@@ -39,6 +39,14 @@ def setup_errors():
     for mapping in error_mappings:
         for error in mapping["errors"]:
             app.register_error_handler(error, mapping["handler"])
+
+
+def setup_context_handlers():
+    """ Setup all the Flask context handlers """
+
+    from handlers import clean_session
+
+    app.teardown_request(clean_session)
 
 
 # Gunicorn running the server
@@ -52,8 +60,10 @@ if __name__ == "main":
     setup_service(c=config)
 
     setup_encoding()
+
     setup_routes()
-    setup_errors()
+    setup_errors_handlers()
+    setup_context_handlers()
 
 
 # Flask running the server
@@ -67,5 +77,7 @@ if __name__ == "__main__":
     setup_service(c=config)
 
     setup_encoding()
+
     setup_routes()
-    setup_errors()
+    setup_errors_handlers()
+    setup_context_handlers()
