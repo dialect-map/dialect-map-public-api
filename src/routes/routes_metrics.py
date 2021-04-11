@@ -52,7 +52,7 @@ def get_paper_metrics(metric_id: str):
     return jsonify(record.data), 200
 
 
-@bp.route("/paper/<paper_id>/<paper_rev>/metrics/jargon/<jargon_id>", methods=["GET"])
+@bp.route("/paper/<path:paper_id>/rev/<paper_rev>/metrics/jargon/<jargon_id>", methods=["GET"])
 def get_paper_metrics_by_jargon(jargon_id: str, paper_id: str = None, paper_rev: int = None):
     """
     Gets a paper jargon metric from the underlying database

@@ -20,7 +20,7 @@ def get_reference(reference_id: str):
     return jsonify(record.data), 200
 
 
-@bp.route("/references/source/<paper_id>/<paper_rev>", methods=["GET"])
+@bp.route("/references/source/<path:paper_id>/rev/<paper_rev>", methods=["GET"])
 def get_references_by_source_paper(paper_id: str, paper_rev: int):
     """
     Gets a paper reference from the underlying database
@@ -34,7 +34,7 @@ def get_references_by_source_paper(paper_id: str, paper_rev: int):
     return jsonify(records_data), 200
 
 
-@bp.route("/references/target/<paper_id>/<paper_rev>", methods=["GET"])
+@bp.route("/references/target/<path:paper_id>/rev/<paper_rev>", methods=["GET"])
 def get_references_by_target_paper(paper_id: str, paper_rev: int):
     """
     Gets a paper reference from the underlying database
