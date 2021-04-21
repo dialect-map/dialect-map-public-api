@@ -42,16 +42,17 @@ def get_jargon_by_string(jargon_str: str):
         return jsonify({}), 404
 
 
-@bp.route("/jargon/groups", methods=["GET"])
-def get_jargon_by_group():
+@bp.route("/jargon/group/<group_id>", methods=["GET"])
+def get_jargon_by_group(group_id: str):
     """
-    Gets a jargon group from the underlying database
+    Gets a list of jargons from the underlying database
+    :param group_id: group ID to filter the jargons by
     :return: HTTP 200 response
     """
 
-    groups = service.jargons.get_by_group()
-    groups = [[record.data for record in g] for g in groups]
-    return jsonify(groups), 200
+    records = service.jargons.get_by_group(group_id)
+    records_data = [record.data for record in records]
+    return jsonify(records_data), 200
 
 
 # ---------------- Jargon Group model ---------------- #
