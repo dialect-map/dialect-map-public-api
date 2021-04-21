@@ -24,6 +24,18 @@ def get_jargon(jargon_id: str):
     return jsonify(record.data), 200
 
 
+@bp.route("/jargon/all", methods=["GET"])
+def get_jargon_all():
+    """
+    Gets all jargons from the underlying database
+    :return: HTTP 200 response
+    """
+
+    records = service.jargons.get_all()
+    records_data = [record.data for record in records]
+    return jsonify(records_data), 200
+
+
 @bp.route("/jargon/string/<jargon_str>", methods=["GET"])
 def get_jargon_by_string(jargon_str: str):
     """
