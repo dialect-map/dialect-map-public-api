@@ -8,7 +8,7 @@ from typing import Union
 
 
 class ConfigLoader(ABC):
-    """ Interface for configuration loader classes """
+    """Interface for configuration loader classes"""
 
     @abstractmethod
     def load_argument(self, data_type: type, name: str, default: Any) -> Any:
@@ -34,7 +34,7 @@ class ConfigLoader(ABC):
 
 
 class EnvironmentConfigLoader(ConfigLoader):
-    """ Configuration loader using the OS environment variables """
+    """Configuration loader using the OS environment variables"""
 
     @staticmethod
     def _parse_value(data_type: type, name: str, default: Any) -> Any:

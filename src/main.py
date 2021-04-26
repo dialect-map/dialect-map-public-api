@@ -14,7 +14,7 @@ cors = CORS(app, methods=["GET"])
 
 
 def create_app():
-    """ Initializes the Flask application entity """
+    """Initializes the Flask application entity"""
 
     from dialect_map.encoding import CustomJSONDecoder
     from dialect_map.encoding import CustomJSONEncoder

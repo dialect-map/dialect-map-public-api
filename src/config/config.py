@@ -4,7 +4,7 @@ from .loaders import ConfigLoader
 
 
 class ApplicationConfig:
-    """ Application global configuration """
+    """Application global configuration"""
 
     def __init__(self, loader: ConfigLoader):
         """
