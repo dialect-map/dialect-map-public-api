@@ -2,6 +2,7 @@
 
 from flask import Blueprint
 from flask import jsonify
+from flask import request
 from globals import service
 
 
@@ -21,12 +22,18 @@ def get_category(category_id: str):
 
 
 @bp.route("/category/all", methods=["GET"])
-def get_jargon_all():
+def get_category_all():
     """
     Gets all categories from the underlying database
     :return: HTTP 200 response
     """
 
-    records = service.categories.get_all()
+    include_archived = request.args.get(
+        key="archived",
+        type=bool,
+        default=False,
+    )
+
+    records = service.categories.get_all(include_archived)
     records_data = [record.data for record in records]
     return jsonify(records_data), 200
