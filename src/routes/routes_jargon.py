@@ -2,6 +2,7 @@
 
 from flask import Blueprint
 from flask import jsonify
+from flask import request
 from globals import service
 from urllib import parse
 
@@ -31,7 +32,13 @@ def get_jargon_all():
     :return: HTTP 200 response
     """
 
-    records = service.jargons.get_all()
+    include_archived = request.args.get(
+        key="archived",
+        type=bool,
+        default=False,
+    )
+
+    records = service.jargons.get_all(include_archived)
     records_data = [record.data for record in records]
     return jsonify(records_data), 200
 
