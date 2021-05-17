@@ -11,7 +11,7 @@ bp = Blueprint("metrics", __name__)
 # ----------- Category Jargon Metrics model ----------- #
 
 
-@bp.route("/category-metrics/<metric_id>", methods=["GET"])
+@bp.get("/category-metrics/<metric_id>")
 def get_cat_metrics(metric_id: str):
     """
     Gets a category jargon metric from the underlying database
@@ -23,9 +23,9 @@ def get_cat_metrics(metric_id: str):
     return jsonify(record.data), 200
 
 
-@bp.route("/category-metrics/jargon/<jargon_id>", methods=["GET"])
-@bp.route("/category-metrics/jargon/<jargon_id>/<category_id>", methods=["GET"])
-def get_cat_metrics_by_jargon(jargon_id: str, category_id: str = None):
+@bp.get("/category-metrics/jargon/<jargon_id>")
+@bp.get("/category-metrics/jargon/<jargon_id>/<category_id>")
+def get_category_metrics_by_jargon(jargon_id: str, category_id: str = None):
     """
     Gets a category jargon metric from the underlying database
     :param jargon_id: ID of the jargon to get metrics from
@@ -41,7 +41,7 @@ def get_cat_metrics_by_jargon(jargon_id: str, category_id: str = None):
 # ------------ Paper Jargon Metrics model ------------ #
 
 
-@bp.route("/paper-metrics/<metric_id>", methods=["GET"])
+@bp.get("/paper-metrics/<metric_id>")
 def get_paper_metrics(metric_id: str):
     """
     Gets a paper jargon metric from the underlying database
@@ -53,9 +53,9 @@ def get_paper_metrics(metric_id: str):
     return jsonify(record.data), 200
 
 
-@bp.route("/paper-metrics/jargon/<jargon_id>", methods=["GET"])
-@bp.route("/paper-metrics/jargon/<jargon_id>/<path:paper_id>", methods=["GET"])
-@bp.route("/paper-metrics/jargon/<jargon_id>/<path:paper_id>/rev/<int:paper_rev>", methods=["GET"])
+@bp.get("/paper-metrics/jargon/<jargon_id>")
+@bp.get("/paper-metrics/jargon/<jargon_id>/<path:paper_id>")
+@bp.get("/paper-metrics/jargon/<jargon_id>/<path:paper_id>/rev/<int:paper_rev>")
 def get_paper_metrics_by_jargon(jargon_id: str, paper_id: str = None, paper_rev: int = None):
     """
     Gets a paper jargon metric from the underlying database
@@ -70,7 +70,7 @@ def get_paper_metrics_by_jargon(jargon_id: str, paper_id: str = None, paper_rev:
     return jsonify(records_data), 200
 
 
-@bp.route("/paper-metrics/jargon/<jargon_id>/latest", methods=["GET"])
+@bp.get("/paper-metrics/jargon/<jargon_id>/latest")
 def get_latest_paper_metrics(jargon_id: str):
     """
     Gets latest paper metric records by jargon ID

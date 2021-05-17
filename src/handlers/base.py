@@ -2,13 +2,13 @@
 
 import logging
 from flask import jsonify
-from typing import Dict
+from flask import Response
 from typing import Tuple
 
 logger = logging.getLogger()
 
 
-def error_handler(error: Exception, code: int) -> Tuple[Dict, int]:
+def error_handler(error: Exception, code: int) -> Tuple[Response, int]:
     """
     Generic exception handler function to be used in a web application
     :param error: exception to be dealt with
