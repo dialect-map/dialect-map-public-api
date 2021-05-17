@@ -11,7 +11,7 @@ bp = Blueprint("papers", __name__)
 # --------------------- Paper model --------------------- #
 
 
-@bp.route("/paper/<path:paper_id>/rev/<paper_rev>", methods=["GET"])
+@bp.get("/paper/<path:paper_id>/rev/<paper_rev>")
 def get_paper(paper_id: str, paper_rev: int):
     """
     Gets a paper from the underlying database
@@ -27,7 +27,7 @@ def get_paper(paper_id: str, paper_rev: int):
 # ------------------ Paper Author model ------------------ #
 
 
-@bp.route("/paper/author/<author_id>", methods=["GET"])
+@bp.get("/paper/author/<author_id>")
 def get_paper_author(author_id: str):
     """
     Gets a paper author from the underlying database
@@ -39,7 +39,7 @@ def get_paper_author(author_id: str):
     return jsonify(record.data), 200
 
 
-@bp.route("/paper/<path:paper_id>/rev/<paper_rev>/authors", methods=["GET"])
+@bp.get("/paper/<path:paper_id>/rev/<paper_rev>/authors")
 def get_paper_authors_by_paper(paper_id: str, paper_rev: int):
     """
     Gets a paper authors from the underlying database
@@ -56,7 +56,7 @@ def get_paper_authors_by_paper(paper_id: str, paper_rev: int):
 # --------------- Paper Ref Counters model --------------- #
 
 
-@bp.route("/paper/reference/counters/<counter_id>", methods=["GET"])
+@bp.get("/paper/reference/counters/<counter_id>")
 def get_ref_counter(counter_id: str):
     """
     Gets a paper ref. counter from the underlying database
@@ -68,7 +68,7 @@ def get_ref_counter(counter_id: str):
     return jsonify(record.data), 200
 
 
-@bp.route("/paper/<path:paper_id>/rev/<paper_rev>/reference/counters", methods=["GET"])
+@bp.get("/paper/<path:paper_id>/rev/<paper_rev>/reference/counters")
 def get_ref_counter_by_paper(paper_id: str, paper_rev: int):
     """
     Gets a paper ref. counter from the underlying database

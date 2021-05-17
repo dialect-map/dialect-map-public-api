@@ -13,7 +13,7 @@ bp = Blueprint("jargons", __name__)
 # ------------------- Jargon model ------------------- #
 
 
-@bp.route("/jargon/<jargon_id>", methods=["GET"])
+@bp.get("/jargon/<jargon_id>")
 def get_jargon(jargon_id: str):
     """
     Gets a jargon from the underlying database
@@ -25,7 +25,7 @@ def get_jargon(jargon_id: str):
     return jsonify(record.data), 200
 
 
-@bp.route("/jargon/all", methods=["GET"])
+@bp.get("/jargon/all")
 def get_jargon_all():
     """
     Gets all jargons from the underlying database
@@ -43,7 +43,7 @@ def get_jargon_all():
     return jsonify(records_data), 200
 
 
-@bp.route("/jargon/string/<jargon_str>", methods=["GET"])
+@bp.get("/jargon/string/<jargon_str>")
 def get_jargon_by_string(jargon_str: str):
     """
     Gets a jargon from the underlying database
@@ -61,7 +61,7 @@ def get_jargon_by_string(jargon_str: str):
         return jsonify({}), 404
 
 
-@bp.route("/jargon/group/<group_id>", methods=["GET"])
+@bp.get("/jargon/group/<group_id>")
 def get_jargon_by_group(group_id: str):
     """
     Gets a list of jargons from the underlying database
@@ -77,7 +77,7 @@ def get_jargon_by_group(group_id: str):
 # ---------------- Jargon Group model ---------------- #
 
 
-@bp.route("/jargon-group/<group_id>", methods=["GET"])
+@bp.get("/jargon-group/<group_id>")
 def get_jargon_group(group_id: str):
     """
     Gets a jargon group from the underlying database

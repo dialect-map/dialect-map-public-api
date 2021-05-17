@@ -8,7 +8,7 @@ from globals import service
 bp = Blueprint("memberships", __name__)
 
 
-@bp.route("/category/membership/<membership_id>", methods=["GET"])
+@bp.get("/category/membership/<membership_id>")
 def get_membership(membership_id: str):
     """
     Gets a membership from the underlying database
@@ -20,7 +20,7 @@ def get_membership(membership_id: str):
     return jsonify(record.data), 200
 
 
-@bp.route("/category/membership/paper/<path:paper_id>/rev/<paper_rev>", methods=["GET"])
+@bp.get("/category/membership/paper/<path:paper_id>/rev/<paper_rev>")
 def get_membership_by_paper(paper_id: str, paper_rev: int):
     """
     Gets a list of memberships from the underlying database
