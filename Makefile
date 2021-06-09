@@ -1,7 +1,6 @@
 APP_VERSION    = $(shell cat VERSION)
 IMAGE_NAME     = "dialect-map-public-api"
 SOURCE_FOLDER  = "src"
-TYPING_PARAMS  = "--allow-redefinition --ignore-missing-imports --cache-dir=/dev/null"
 
 GCP_PROJECT   ?= "ds3-dialect-map"
 GCP_REGISTRY  ?= "us.gcr.io"
@@ -21,7 +20,7 @@ check:
 	@echo "Checking code format"
 	@black --check $(SOURCE_FOLDER)
 	@echo "Checking type annotations"
-	@mypy "$(TYPING_PARAMS)" $(SOURCE_FOLDER)
+	@mypy $(SOURCE_FOLDER)
 
 
 .PHONY: install-dev
