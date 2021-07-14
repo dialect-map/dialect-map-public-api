@@ -7,10 +7,10 @@ COPY . /app
 
 
 # Install binary dependencies
-RUN apt-get update && apt-get install -y git
+RUN apt-get update && \
+    apt-get install -y git
 
-# Download public key for github.com
-# Necessary to allow installation of private packages
+# Download public key for github.com (needed for private packages)
 RUN mkdir -p -m 0600 ~/.ssh && \
     ssh-keyscan github.com >> ~/.ssh/known_hosts
 
