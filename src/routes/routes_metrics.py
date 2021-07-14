@@ -4,6 +4,9 @@ from flask import Blueprint
 from flask import jsonify
 from globals import service
 
+from dialect_map_schemas import JargonCategoryMetricsSchema
+from dialect_map_schemas import JargonPaperMetricsSchema
+
 
 bp = Blueprint("metrics", __name__)
 
@@ -19,8 +22,11 @@ def get_cat_metrics(metric_id: str):
     :return: HTTP 200 response
     """
 
-    record = service.jargon_cat_metrics.get(metric_id)
-    return jsonify(record.data), 200
+    metric = service.jargon_cat_metrics.get(metric_id)
+    schema = JargonCategoryMetricsSchema()
+    record = schema.dump(metric)
+
+    return jsonify(record), 200
 
 
 @bp.get("/category-metrics/jargon/<jargon_id>")
@@ -33,9 +39,11 @@ def get_category_metrics_by_jargon(jargon_id: str, category_id: str = None):
     :return: HTTP 200 response
     """
 
-    records = service.jargon_cat_metrics.get_by_jargon(jargon_id, category_id)
-    records_data = [record.data for record in records]
-    return jsonify(records_data), 200
+    metrics = service.jargon_cat_metrics.get_by_jargon(jargon_id, category_id)
+    schemas = JargonCategoryMetricsSchema(many=True)
+    records = schemas.dump(metrics)
+
+    return jsonify(records), 200
 
 
 # ------------ Paper Jargon Metrics model ------------ #
@@ -49,8 +57,11 @@ def get_paper_metrics(metric_id: str):
     :return: HTTP 200 response
     """
 
-    record = service.jargon_paper_metrics.get(metric_id)
-    return jsonify(record.data), 200
+    metric = service.jargon_paper_metrics.get(metric_id)
+    schema = JargonPaperMetricsSchema()
+    record = schema.dump(metric)
+
+    return jsonify(record), 200
 
 
 @bp.get("/paper-metrics/jargon/<jargon_id>")
@@ -65,9 +76,11 @@ def get_paper_metrics_by_jargon(jargon_id: str, paper_id: str = None, paper_rev:
     :return: HTTP 200 response
     """
 
-    records = service.jargon_paper_metrics.get_by_jargon(jargon_id, paper_id, paper_rev)
-    records_data = [record.data for record in records]
-    return jsonify(records_data), 200
+    metrics = service.jargon_paper_metrics.get_by_jargon(jargon_id, paper_id, paper_rev)
+    schemas = JargonPaperMetricsSchema(many=True)
+    records = schemas.dump(metrics)
+
+    return jsonify(records), 200
 
 
 @bp.get("/paper-metrics/jargon/<jargon_id>/latest")
@@ -78,6 +91,8 @@ def get_latest_paper_metrics(jargon_id: str):
     :return: HTTP 200 response
     """
 
-    records = service.jargon_paper_metrics.get_latest_by_jargon(jargon_id)
-    records_data = [record.data for record in records]
-    return jsonify(records_data), 200
+    metrics = service.jargon_paper_metrics.get_latest_by_jargon(jargon_id)
+    schemas = JargonPaperMetricsSchema(many=True)
+    records = schemas.dump(metrics)
+
+    return jsonify(records), 200
