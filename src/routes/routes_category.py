@@ -5,6 +5,8 @@ from flask import jsonify
 from flask import request
 from globals import service
 
+from dialect_map_schemas import CategorySchema
+
 
 bp = Blueprint("categories", __name__)
 
@@ -17,8 +19,11 @@ def get_category(category_id: str):
     :return: HTTP 200 response
     """
 
-    record = service.categories.get(category_id)
-    return jsonify(record.data), 200
+    category = service.categories.get(category_id)
+    schema = CategorySchema()
+    record = schema.dump(category)
+
+    return jsonify(record), 200
 
 
 @bp.get("/category/all")
@@ -34,6 +39,8 @@ def get_category_all():
         default=False,
     )
 
-    records = service.categories.get_all(include_archived)
-    records_data = [record.data for record in records]
-    return jsonify(records_data), 200
+    categories = service.categories.get_all(include_archived)
+    schemas = CategorySchema(many=True)
+    records = schemas.dump(categories)
+
+    return jsonify(records), 200
