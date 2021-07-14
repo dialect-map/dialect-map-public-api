@@ -4,6 +4,8 @@ from flask import Blueprint
 from flask import jsonify
 from globals import service
 
+from dialect_map_schemas import PaperReferenceSchema
+
 
 bp = Blueprint("references", __name__)
 
@@ -16,8 +18,11 @@ def get_reference(reference_id: str):
     :return: HTTP 200 response
     """
 
-    record = service.paper_refs.get(reference_id)
-    return jsonify(record.data), 200
+    ref = service.paper_refs.get(reference_id)
+    schema = PaperReferenceSchema()
+    record = schema.dump(ref)
+
+    return jsonify(record), 200
 
 
 @bp.get("/references/source/<path:paper_id>/rev/<paper_rev>")
@@ -29,9 +34,11 @@ def get_references_by_source_paper(paper_id: str, paper_rev: int):
     :return: HTTP 200 response
     """
 
-    records = service.paper_refs.get_by_source_paper(paper_id, paper_rev)
-    records_data = [record.data for record in records]
-    return jsonify(records_data), 200
+    refs = service.paper_refs.get_by_source_paper(paper_id, paper_rev)
+    schemas = PaperReferenceSchema(many=True)
+    records = schemas.dump(refs)
+
+    return jsonify(records), 200
 
 
 @bp.get("/references/target/<path:paper_id>/rev/<paper_rev>")
@@ -43,6 +50,8 @@ def get_references_by_target_paper(paper_id: str, paper_rev: int):
     :return: HTTP 200 response
     """
 
-    records = service.paper_refs.get_by_target_paper(paper_id, paper_rev)
-    records_data = [record.data for record in records]
-    return jsonify(records_data), 200
+    refs = service.paper_refs.get_by_target_paper(paper_id, paper_rev)
+    schemas = PaperReferenceSchema(many=True)
+    records = schemas.dump(refs)
+
+    return jsonify(records), 200
