@@ -6,6 +6,9 @@ from flask import request
 from globals import service
 from urllib import parse
 
+from dialect_map_schemas import JargonSchema
+from dialect_map_schemas import JargonGroupSchema
+
 
 bp = Blueprint("jargons", __name__)
 
@@ -21,8 +24,11 @@ def get_jargon(jargon_id: str):
     :return: HTTP 200 response
     """
 
-    record = service.jargons.get(jargon_id)
-    return jsonify(record.data), 200
+    jargon = service.jargons.get(jargon_id)
+    schema = JargonSchema()
+    record = schema.dump(jargon)
+
+    return jsonify(record), 200
 
 
 @bp.get("/jargon/all")
@@ -38,9 +44,11 @@ def get_jargon_all():
         default=False,
     )
 
-    records = service.jargons.get_all(include_archived)
-    records_data = [record.data for record in records]
-    return jsonify(records_data), 200
+    jargons = service.jargons.get_all(include_archived)
+    schemas = JargonSchema(many=True)
+    records = schemas.dump(jargons)
+
+    return jsonify(records), 200
 
 
 @bp.get("/jargon/string/<jargon_str>")
@@ -53,10 +61,13 @@ def get_jargon_by_string(jargon_str: str):
 
     string = parse.unquote(jargon_str)
     string = string.lower()
-    record = service.jargons.get_by_string(string)
 
-    if record:
-        return jsonify(record.data), 200
+    jargon = service.jargons.get_by_string(string)
+
+    if jargon:
+        schema = JargonSchema()
+        record = schema.dump(jargon)
+        return jsonify(record), 200
     else:
         return jsonify({}), 404
 
@@ -69,9 +80,11 @@ def get_jargon_by_group(group_id: str):
     :return: HTTP 200 response
     """
 
-    records = service.jargons.get_by_group(group_id)
-    records_data = [record.data for record in records]
-    return jsonify(records_data), 200
+    jargons = service.jargons.get_by_group(group_id)
+    schemas = JargonSchema(many=True)
+    records = schemas.dump(jargons)
+
+    return jsonify(records), 200
 
 
 # ---------------- Jargon Group model ---------------- #
@@ -85,5 +98,8 @@ def get_jargon_group(group_id: str):
     :return: HTTP 200 response
     """
 
-    record = service.jargon_groups.get(group_id)
-    return jsonify(record.data), 200
+    group = service.jargon_groups.get(group_id)
+    schema = JargonGroupSchema()
+    record = schema.dump(group)
+
+    return jsonify(record), 200
