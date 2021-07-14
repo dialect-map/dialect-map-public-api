@@ -40,18 +40,20 @@ jobs:
       run: |
         make check
 
-  build:
-    needs: [check]
-    runs-on: ubuntu-latest
-    steps:
-    - name: "Set up GitHub Actions"
-      uses: actions/checkout@v2
-    - name: "Set up private packages SSH keys"
-      uses: webfactory/ssh-agent@v0.5.3
-      with:
-        ssh-private-key: |
-          ${{ secrets.DM_CORE_SSH_KEY }}
-          ${{ secrets.DM_SCHEMAS_SSH_KEY }}
-    - name: "Build Docker image"
-      run: |
-        make build
+#  ONLY POSSIBLE WHEN PROJECT GOES PUBLIC
+#
+#  build:
+#    needs: [check]
+#    runs-on: ubuntu-latest
+#    steps:
+#    - name: "Set up GitHub Actions"
+#      uses: actions/checkout@v2
+#    - name: "Set up private packages SSH keys"
+#      uses: webfactory/ssh-agent@v0.5.3
+#      with:
+#        ssh-private-key: |
+#          ${{ secrets.DM_CORE_SSH_KEY }}
+#          ${{ secrets.DM_SCHEMAS_SSH_KEY }}
+#    - name: "Build Docker image"
+#      run: |
+#        make build
