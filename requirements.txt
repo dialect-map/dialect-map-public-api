@@ -5,3 +5,4 @@ gunicorn==20.1.0
 
 # Private packages
 git+ssh://git@github.com/dialect-map/dialect-map-core.git@v0.3.8#egg=dialect-map-core
+git+ssh://git@github.com/dialect-map/dialect-map-schemas.git@v0.1.1#egg=dialect-map-schemas
