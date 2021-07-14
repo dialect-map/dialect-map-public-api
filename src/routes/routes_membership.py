@@ -4,6 +4,8 @@ from flask import Blueprint
 from flask import jsonify
 from globals import service
 
+from dialect_map_schemas import CategoryMembershipSchema
+
 
 bp = Blueprint("memberships", __name__)
 
@@ -16,8 +18,11 @@ def get_membership(membership_id: str):
     :return: HTTP 200 response
     """
 
-    record = service.category_memberships.get(membership_id)
-    return jsonify(record.data), 200
+    member = service.category_memberships.get(membership_id)
+    schema = CategoryMembershipSchema()
+    record = schema.dump(member)
+
+    return jsonify(record), 200
 
 
 @bp.get("/category/membership/paper/<path:paper_id>/rev/<paper_rev>")
@@ -29,6 +34,8 @@ def get_membership_by_paper(paper_id: str, paper_rev: int):
     :return: HTTP 200 response
     """
 
-    records = service.category_memberships.get_by_paper(paper_id, paper_rev)
-    records_data = [record.data for record in records]
-    return jsonify(records_data), 200
+    members = service.category_memberships.get_by_paper(paper_id, paper_rev)
+    schemas = CategoryMembershipSchema(many=True)
+    records = schemas.dump(members)
+
+    return jsonify(records), 200
