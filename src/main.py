@@ -16,9 +16,6 @@ cors = CORS(app, methods=["GET"])
 def create_app():
     """Initializes the Flask application entity"""
 
-    from dialect_map.encoding import CustomJSONDecoder
-    from dialect_map.encoding import CustomJSONEncoder
-
     from handlers import clean_session
     from handlers import error_mappings
     from routes import all_blueprints
@@ -34,10 +31,6 @@ def create_app():
 
     # Setup all the context handlers
     app.teardown_request(clean_session)
-
-    # Setup the encoding / decoding classes
-    app.json_decoder = CustomJSONDecoder
-    app.json_encoder = CustomJSONEncoder
 
 
 # Gunicorn running the server
