@@ -4,6 +4,10 @@ from flask import Blueprint
 from flask import jsonify
 from globals import service
 
+from dialect_map_schemas import PaperSchema
+from dialect_map_schemas import PaperAuthorSchema
+from dialect_map_schemas import PaperReferenceCountersSchema
+
 
 bp = Blueprint("papers", __name__)
 
@@ -20,8 +24,11 @@ def get_paper(paper_id: str, paper_rev: int):
     :return: HTTP 200 response
     """
 
-    record = service.papers.get(paper_id, paper_rev)
-    return jsonify(record.data), 200
+    paper = service.papers.get(paper_id, paper_rev)
+    schema = PaperSchema()
+    record = schema.dump(paper)
+
+    return jsonify(record), 200
 
 
 # ------------------ Paper Author model ------------------ #
@@ -35,8 +42,11 @@ def get_paper_author(author_id: str):
     :return: HTTP 200 response
     """
 
-    record = service.paper_authors.get(author_id)
-    return jsonify(record.data), 200
+    author = service.paper_authors.get(author_id)
+    schema = PaperAuthorSchema()
+    record = schema.dump(author)
+
+    return jsonify(record), 200
 
 
 @bp.get("/paper/<path:paper_id>/rev/<paper_rev>/authors")
@@ -48,9 +58,11 @@ def get_paper_authors_by_paper(paper_id: str, paper_rev: int):
     :return: HTTP 200 response
     """
 
-    records = service.paper_authors.get_by_paper(paper_id, paper_rev)
-    records_data = [record.data for record in records]
-    return jsonify(records_data), 200
+    authors = service.paper_authors.get_by_paper(paper_id, paper_rev)
+    schemas = PaperAuthorSchema(many=True)
+    records = schemas.dump(authors)
+
+    return jsonify(records), 200
 
 
 # --------------- Paper Ref Counters model --------------- #
@@ -64,8 +76,11 @@ def get_ref_counter(counter_id: str):
     :return: HTTP 200 response
     """
 
-    record = service.paper_ref_counters.get(counter_id)
-    return jsonify(record.data), 200
+    counter = service.paper_ref_counters.get(counter_id)
+    schema = PaperReferenceCountersSchema()
+    record = schema.dump(counter)
+
+    return jsonify(record), 200
 
 
 @bp.get("/paper/<path:paper_id>/rev/<paper_rev>/reference/counters")
@@ -77,6 +92,8 @@ def get_ref_counter_by_paper(paper_id: str, paper_rev: int):
     :return: HTTP 200 response
     """
 
-    records = service.paper_ref_counters.get_by_paper(paper_id, paper_rev)
-    records_data = [record.data for record in records]
-    return jsonify(records_data), 200
+    counters = service.paper_ref_counters.get_by_paper(paper_id, paper_rev)
+    schemas = PaperReferenceCountersSchema(many=True)
+    records = schemas.dump(counters)
+
+    return jsonify(records), 200
