@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
+
 from flask import jsonify
 from flask import Response
 from typing import Tuple
@@ -16,7 +17,11 @@ def error_handler(error: Exception, code: int) -> Tuple[Response, int]:
     :return: (JSON, HTTP status code)
     """
 
-    error_type = error.__class__
+    ### NOTE:
+    ### Unwraps the original error if it exists (SQLAlchemy specific)
+    error = getattr(error, "orig", error)
+
+    error_type = str(error.__class__.__name__)
     error_msg = str(error)
 
     logger.error(f"Exception {error_type}: {error_msg}")
