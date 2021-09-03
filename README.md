@@ -1,5 +1,11 @@
 # Dialect map public API
 
+[![CI/CD Status][ci-status-badge]][ci-status-link]
+[![Coverage Status][cov-status-badge]][cov-status-link]
+[![MIT license][mit-license-badge]][mit-license-link]
+[![Code style][code-style-badge]][code-style-link]
+
+
 ### About
 This repository contains the web server to access the database information.
 
@@ -57,6 +63,15 @@ This project uses a set of env. variables to configure certain aspects of the AP
 | DIALECT_MAP_DB_URL       | ...                | No       | Database connection URL                       |
 | DIALECT_MAP_LOG_LEVEL    | INFO               | No       | Log messages level                            |
 
+
+[ci-status-badge]: https://github.com/dialect-map/dialect-map-public-api/actions/workflows/ci.yml/badge.svg?branch=main
+[ci-status-link]: https://github.com/dialect-map/dialect-map-public-api/actions/workflows/ci.yml?query=branch%3Amain
+[code-style-badge]: https://img.shields.io/badge/code%20style-black-000000.svg
+[code-style-link]: https://github.com/psf/black
+[cov-status-badge]: https://codecov.io/gh/dialect-map/dialect-map-public-api/branch/main/graph/badge.svg
+[cov-status-link]: https://codecov.io/gh/dialect-map/dialect-map-public-api
+[mit-license-badge]: https://img.shields.io/badge/License-MIT-blue.svg
+[mit-license-link]: https://github.com/dialect-map/dialect-map-public-api/blob/main/LICENSE
 
 [dialect-map-ui]: https://github.com/dialect-map/dialect-map-ui
 [docs-gcloud-cli]: https://cloud.google.com/sdk/docs/install
