@@ -18,7 +18,7 @@ make install-dev
 
 
 ### Formatting
-All Python files are formatted using [Black][black-web], and the custom properties defined
+All Python files are formatted using [Black][web-black], and the custom properties defined
 in the `pyproject.toml` file.
 ```sh
 make check
@@ -29,7 +29,7 @@ make check
 There is a `Makefile` to perform both Docker `build` and `push` operations.
 
 The project is currently designed to be deployed in the _DS3-Dialect-Map_ GCP project,
-so the initial step involves using [gcloud][gcloud-cli-setup] CLI tool to log in with GCP:
+so the initial step involves using [gcloud][docs-gcloud-cli] CLI tool to log in with GCP:
 
 ```sh
 gcloud login
@@ -58,6 +58,6 @@ This project uses a set of env. variables to configure certain aspects of the AP
 | DIALECT_MAP_LOG_LEVEL    | INFO               | No       | Log messages level                            |
 
 
-[black-web]: https://black.readthedocs.io/en/stable/
 [dialect-map-ui]: https://github.com/dialect-map/dialect-map-ui
-[gcloud-cli-setup]: https://cloud.google.com/sdk/docs/install
+[docs-gcloud-cli]: https://cloud.google.com/sdk/docs/install
+[web-black]: https://black.readthedocs.io/en/stable/
