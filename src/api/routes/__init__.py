@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from .__help import bp as blueprint_help
+
 from .routes_category import bp as blueprint_category
 from .routes_jargon import bp as blueprint_jargon
 from .routes_membership import bp as blueprint_membership
