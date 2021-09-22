@@ -19,10 +19,14 @@ def create_app():
     from api.handlers import clean_session
     from api.handlers import error_mappings
     from api.routes import all_blueprints
+    from api.routes import blueprint_help
 
     # Setup all the blueprint routes
     for bp in all_blueprints:
         app.register_blueprint(bp)
+
+    # Setup special help routes
+    app.register_blueprint(blueprint_help)
 
     # Setup all the error handlers
     for mapping in error_mappings:
