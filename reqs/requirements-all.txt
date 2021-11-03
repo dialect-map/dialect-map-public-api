@@ -1,4 +1,4 @@
 -r requirements-prod.txt
 -r requirements-lint.txt
 
-pre-commit==2.14.1
+pre-commit==2.15.0
