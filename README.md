@@ -15,9 +15,9 @@ given the papers categorization over a pair of user specified jargon words frequ
 
 
 ### Dependencies
-Python dependencies are specified within the `requirements.txt` and `requirements-dev.txt` files.
+Python dependencies are specified on the multiple files within the `reqs` directory.
 
-In order to install the development packages, as long as the defined commit hooks:
+In order to install all the development packages, as long as the defined commit hooks:
 ```sh
 make install-dev
 ```
