@@ -12,7 +12,7 @@ To set up the necessary resources for a server instance to work:
 
 #### 1. Install dependencies
 ```sh
-$ pip install -r requirements.txt
+$ pip install -r reqs/requirements-prod.txt
 ```
 
 #### 2. Start a local PostgreSQL database instance
