@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from globals import service
+from ..globals import service
 
 
 def clean_session(error: Exception) -> None:
