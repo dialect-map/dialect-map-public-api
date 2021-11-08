@@ -3,9 +3,9 @@
 from flask import Flask
 from flask_cors import CORS
 
-from config import ApplicationConfig
-from config import EnvironmentConfigLoader
-from globals import setup_service
+from api.config import ApplicationConfig
+from api.config import EnvironmentConfigLoader
+from api.globals import setup_service
 from logs import setup_logger
 
 
@@ -16,9 +16,9 @@ cors = CORS(app, methods=["GET"])
 def create_app():
     """Initializes the Flask application entity"""
 
-    from handlers import clean_session
-    from handlers import error_mappings
-    from routes import all_blueprints
+    from api.handlers import clean_session
+    from api.handlers import error_mappings
+    from api.routes import all_blueprints
 
     # Setup all the blueprint routes
     for bp in all_blueprints:
