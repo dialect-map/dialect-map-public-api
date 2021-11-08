@@ -2,9 +2,10 @@
 
 from flask import Blueprint
 from flask import jsonify
-from globals import service
 
 from dialect_map_schemas import CategoryMembershipSchema
+
+from ..globals import service
 
 
 bp = Blueprint("memberships", __name__)

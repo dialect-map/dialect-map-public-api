@@ -3,11 +3,12 @@
 from flask import Blueprint
 from flask import jsonify
 from flask import request
-from globals import service
 from urllib import parse
 
 from dialect_map_schemas import JargonSchema
 from dialect_map_schemas import JargonGroupSchema
+
+from ..globals import service
 
 
 bp = Blueprint("jargons", __name__)

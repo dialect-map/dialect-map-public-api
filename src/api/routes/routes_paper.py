@@ -2,11 +2,12 @@
 
 from flask import Blueprint
 from flask import jsonify
-from globals import service
 
 from dialect_map_schemas import PaperSchema
 from dialect_map_schemas import PaperAuthorSchema
 from dialect_map_schemas import PaperReferenceCountersSchema
+
+from ..globals import service
 
 
 bp = Blueprint("papers", __name__)
