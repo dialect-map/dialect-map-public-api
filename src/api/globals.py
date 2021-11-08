@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import atexit
-from config import ApplicationConfig
 
 from dialect_map.service import ApplicationService
 from dialect_map.storage import SQLAlchemyDatabase
+
+from .config import ApplicationConfig
 
 
 service: ApplicationService
