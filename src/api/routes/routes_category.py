@@ -3,9 +3,10 @@
 from flask import Blueprint
 from flask import jsonify
 from flask import request
-from globals import service
 
 from dialect_map_schemas import CategorySchema
+
+from ..globals import service
 
 
 bp = Blueprint("categories", __name__)

@@ -2,10 +2,11 @@
 
 from flask import Blueprint
 from flask import jsonify
-from globals import service
 
 from dialect_map_schemas import JargonCategoryMetricsSchema
 from dialect_map_schemas import JargonPaperMetricsSchema
+
+from ..globals import service
 
 
 bp = Blueprint("metrics", __name__)
