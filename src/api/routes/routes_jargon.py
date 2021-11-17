@@ -20,9 +20,23 @@ bp = Blueprint("jargons", __name__)
 @bp.get("/jargon/<jargon_id>")
 def get_jargon(jargon_id: str):
     """
-    Gets a jargon from the underlying database
-    :param jargon_id: ID of the jargon to get
-    :return: HTTP 200 response
+    Jargon term endpoint
+    ---
+    get:
+      description: Get a jargon term from the database
+      parameters:
+        - name: jargon_id
+          in: path
+          description: Jargon term identifier
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Jargon term JSON record
+          content:
+            application/json:
+              schema: JargonSchema
     """
 
     jargon = service.jargons.get(jargon_id)
@@ -35,8 +49,25 @@ def get_jargon(jargon_id: str):
 @bp.get("/jargon/all")
 def get_jargon_all():
     """
-    Gets all jargons from the underlying database
-    :return: HTTP 200 response
+    All jargon terms endpoint
+    ---
+    get:
+      description: Get all jargon terms from the database
+      parameters:
+        - name: archived
+          in: query
+          description: Flag to whether or not include archived terms
+          required: false
+          schema:
+            type: boolean
+      responses:
+        200:
+          description: Jargon term JSON records
+          content:
+            application/json:
+              schema:
+                type: array
+                items: JargonSchema
     """
 
     include_archived = request.args.get(
@@ -55,9 +86,25 @@ def get_jargon_all():
 @bp.get("/jargon/string/<jargon_str>")
 def get_jargon_by_string(jargon_str: str):
     """
-    Gets a jargon from the underlying database
-    :param jargon_str: jargon string representation
-    :return: HTTP 200 / HTTP 404 responses
+    Jargon term by string endpoint
+    ---
+    get:
+      description: Get a jargon term from the database
+      parameters:
+        - name: jargon_str
+          in: path
+          description: Jargon term string
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Jargon term JSON record
+          content:
+            application/json:
+              schema: JargonSchema
+        404:
+          description: Jargon term not found
     """
 
     string = parse.unquote(jargon_str)
@@ -76,9 +123,25 @@ def get_jargon_by_string(jargon_str: str):
 @bp.get("/jargon/group/<group_id>")
 def get_jargon_by_group(group_id: str):
     """
-    Gets a list of jargons from the underlying database
-    :param group_id: group ID to filter the jargons by
-    :return: HTTP 200 response
+    Jargon term by group endpoint
+    ---
+    get:
+      description: Get a list of jargon terms from the database
+      parameters:
+        - name: group_id
+          in: path
+          description: Jargon terms group identifier
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Jargon term JSON records
+          content:
+            application/json:
+              schema:
+                type: array
+                items: JargonSchema
     """
 
     jargons = service.jargons.get_by_group(group_id)
@@ -94,9 +157,23 @@ def get_jargon_by_group(group_id: str):
 @bp.get("/jargon-group/<group_id>")
 def get_jargon_group(group_id: str):
     """
-    Gets a jargon group from the underlying database
-    :param group_id: ID of the jargon group to get
-    :return: HTTP 200 response
+    Jargon group endpoint
+    ---
+    get:
+      description: Get a jargon group from the database
+      parameters:
+        - name: group_id
+          in: path
+          description: Jargon group identifier
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Jargon group JSON record
+          content:
+            application/json:
+              schema: JargonGroupSchema
     """
 
     group = service.jargon_groups.get(group_id)
