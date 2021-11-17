@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import logging
+
 from flask import Flask
 from flask_cors import CORS
 
@@ -19,14 +21,13 @@ def create_app():
     from api.handlers import clean_session
     from api.handlers import error_mappings
     from api.routes import all_blueprints
-    from api.routes import blueprint_help
 
     # Setup all the blueprint routes
     for bp in all_blueprints:
         app.register_blueprint(bp)
 
-    # Setup special help routes
-    app.register_blueprint(blueprint_help)
+    # Setup special help blueprint
+    setup_help_blueprint()
 
     # Setup all the error handlers
     for mapping in error_mappings:
@@ -35,6 +36,22 @@ def create_app():
 
     # Setup all the context handlers
     app.teardown_request(clean_session)
+
+
+def setup_help_blueprint():
+    """
+    Set ups optional OpenAPI specification help route
+    OpenAPI: https://swagger.io/specification/
+    Package: https://github.com/marshmallow-code/apispec
+    """
+
+    try:
+        from api.routes import blueprint_help
+    except ImportError:
+        logging.info("Skipping API help endpoint")
+    else:
+        logging.info("Loading API help endpoint")
+        app.register_blueprint(blueprint_help)
 
 
 # Gunicorn running the server

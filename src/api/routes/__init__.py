@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from .__help import bp as blueprint_help
+try:
+    from .__help import bp as blueprint_help
+except ImportError:
+    pass
 
 from .routes_category import bp as blueprint_category
 from .routes_jargon import bp as blueprint_jargon
