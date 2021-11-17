@@ -15,9 +15,23 @@ bp = Blueprint("categories", __name__)
 @bp.get("/category/<category_id>")
 def get_category(category_id: str):
     """
-    Gets a category from the underlying database
-    :param category_id: ID of the category to get
-    :return: HTTP 200 response
+    ArXiv category endpoint
+    ---
+    get:
+      description: Get an ArXiv category from the database
+      parameters:
+        - name: category_id
+          in: path
+          description: ArXiv category identifier
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: ArXiv category JSON record
+          content:
+            application/json:
+              schema: CategorySchema
     """
 
     category = service.categories.get(category_id)
@@ -30,8 +44,25 @@ def get_category(category_id: str):
 @bp.get("/category/all")
 def get_category_all():
     """
-    Gets all categories from the underlying database
-    :return: HTTP 200 response
+    All ArXiv categories endpoint
+    ---
+    get:
+      description: Get all ArXiv categories from the database
+      parameters:
+        - name: archived
+          in: query
+          description: Flag to whether or not include archived categories
+          required: false
+          schema:
+            type: boolean
+      responses:
+        200:
+          description: ArXiv category JSON records
+          content:
+            application/json:
+              schema:
+                type: array
+                items: CategorySchema
     """
 
     include_archived = request.args.get(
