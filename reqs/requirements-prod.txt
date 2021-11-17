@@ -1,6 +1,4 @@
 # Public packages
-apispec==5.1.0
-apispec-webframeworks==0.5.2
 flask==2.0.2
 flask_cors==3.0.10
 gunicorn==20.1.0
