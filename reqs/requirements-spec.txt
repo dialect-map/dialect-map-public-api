@@ -1,0 +1,3 @@
+# Public packages
+apispec==5.1.1
+apispec-webframeworks==0.5.2

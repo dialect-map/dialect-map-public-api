@@ -18,7 +18,8 @@ RUN mkdir -p -m 0600 ~/.ssh && \
 # Install Python dependencies
 RUN --mount=type=ssh \
     pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir --requirement reqs/requirements-prod.txt
+    pip install --no-cache-dir --requirement reqs/requirements-prod.txt && \
+    pip install --no-cache-dir --requirement reqs/requirements-spec.txt
 
 
 # Tell Docker about the port the application will expose

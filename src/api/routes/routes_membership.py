@@ -14,9 +14,23 @@ bp = Blueprint("memberships", __name__)
 @bp.get("/category/membership/<membership_id>")
 def get_membership(membership_id: str):
     """
-    Gets a membership from the underlying database
-    :param membership_id: ID of the membership to get
-    :return: HTTP 200 response
+    Category membership endpoint
+    ---
+    get:
+      description: Get an category membership from the database
+      parameters:
+        - name: membership_id
+          in: path
+          description: Category membership identifier
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Category membership JSON record
+          content:
+            application/json:
+              schema: CategoryMembershipSchema
     """
 
     member = service.category_memberships.get(membership_id)
@@ -29,10 +43,31 @@ def get_membership(membership_id: str):
 @bp.get("/category/membership/paper/<path:paper_id>/rev/<paper_rev>")
 def get_membership_by_paper(paper_id: str, paper_rev: int):
     """
-    Gets a list of memberships from the underlying database
-    :param paper_id: ID of the paper to filter memberships by
-    :param paper_rev: revision of the paper to filter memberships by
-    :return: HTTP 200 response
+    Category memberships by paper endpoint
+    ---
+    get:
+      description: Get a list of category memberships from the database
+      parameters:
+        - name: paper_id
+          in: path
+          description: ArXiv paper identifier
+          required: true
+          schema:
+            type: string
+        - name: paper_rev
+          in: path
+          description: ArXiv paper revision
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Category membership JSON records
+          content:
+            application/json:
+              schema:
+                type: array
+                items: CategoryMembershipSchema
     """
 
     members = service.category_memberships.get_by_paper(paper_id, paper_rev)

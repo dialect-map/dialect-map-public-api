@@ -18,9 +18,23 @@ bp = Blueprint("metrics", __name__)
 @bp.get("/category-metrics/<metric_id>")
 def get_cat_metrics(metric_id: str):
     """
-    Gets a category jargon metric from the underlying database
-    :param metric_id: ID of the metric to get
-    :return: HTTP 200 response
+    ArXiv category metrics endpoint
+    ---
+    get:
+      description: Get a set of ArXiv category metrics from the database
+      parameters:
+        - name: metric_id
+          in: path
+          description: ArXiv category metrics identifier
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: ArXiv category metrics JSON record
+          content:
+            application/json:
+              schema: JargonCategoryMetricsSchema
     """
 
     metric = service.jargon_cat_metrics.get(metric_id)
@@ -34,10 +48,31 @@ def get_cat_metrics(metric_id: str):
 @bp.get("/category-metrics/jargon/<jargon_id>/<category_id>")
 def get_category_metrics_by_jargon(jargon_id: str, category_id: str = None):
     """
-    Gets a category jargon metric from the underlying database
-    :param jargon_id: ID of the jargon to get metrics from
-    :param category_id: ID of the category to filter metrics by (optional)
-    :return: HTTP 200 response
+    ArXiv category metrics by jargon endpoint
+    ---
+    get:
+      description: Get a list of ArXiv category metrics from the database
+      parameters:
+        - name: jargon_id
+          in: path
+          description: Jargon term identifier
+          required: true
+          schema:
+            type: string
+        - name: category_id
+          in: path
+          description: ArXiv category identifier
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: ArXiv category metrics JSON records
+          content:
+            application/json:
+              schema:
+                type: array
+                items: JargonCategoryMetricsSchema
     """
 
     metrics = service.jargon_cat_metrics.get_by_jargon(jargon_id, category_id)
@@ -53,9 +88,23 @@ def get_category_metrics_by_jargon(jargon_id: str, category_id: str = None):
 @bp.get("/paper-metrics/<metric_id>")
 def get_paper_metrics(metric_id: str):
     """
-    Gets a paper jargon metric from the underlying database
-    :param metric_id: ID of the metric to get
-    :return: HTTP 200 response
+    ArXiv paper metrics endpoint
+    ---
+    get:
+      description: Get a set of ArXiv paper metrics from the database
+      parameters:
+        - name: metric_id
+          in: path
+          description: ArXiv paper metrics identifier
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: ArXiv paper metrics JSON record
+          content:
+            application/json:
+              schema: JargonPaperMetricsSchema
     """
 
     metric = service.jargon_paper_metrics.get(metric_id)
@@ -70,11 +119,37 @@ def get_paper_metrics(metric_id: str):
 @bp.get("/paper-metrics/jargon/<jargon_id>/<path:paper_id>/rev/<int:paper_rev>")
 def get_paper_metrics_by_jargon(jargon_id: str, paper_id: str = None, paper_rev: int = None):
     """
-    Gets a paper jargon metric from the underlying database
-    :param jargon_id: ID of the jargon to get metrics from
-    :param paper_id: ID of the paper to filter metrics by (optional)
-    :param paper_rev: revision of the paper to filter metrics by (optional)
-    :return: HTTP 200 response
+    ArXiv paper metrics by jargon endpoint
+    ---
+    get:
+      description: Get a list of ArXiv paper metrics from the database
+      parameters:
+        - name: jargon_id
+          in: path
+          description: Jargon term identifier
+          required: true
+          schema:
+            type: string
+        - name: paper_id
+          in: path
+          description: ArXiv paper identifier
+          required: false
+          schema:
+            type: string
+        - name: paper_rev
+          in: path
+          description: ArXiv paper revision
+          required: false
+          schema:
+            type: integer
+      responses:
+        200:
+          description: ArXiv paper metrics JSON records
+          content:
+            application/json:
+              schema:
+                type: array
+                items: JargonPaperMetricsSchema
     """
 
     metrics = service.jargon_paper_metrics.get_by_jargon(jargon_id, paper_id, paper_rev)
@@ -87,9 +162,25 @@ def get_paper_metrics_by_jargon(jargon_id: str, paper_id: str = None, paper_rev:
 @bp.get("/paper-metrics/jargon/<jargon_id>/latest")
 def get_latest_paper_metrics(jargon_id: str):
     """
-    Gets latest paper metric records by jargon ID
-    :param jargon_id: ID of the metrics associated jargon
-    :return: HTTP 200 response
+    ArXiv papers latest metrics by jargon endpoint
+    ---
+    get:
+      description: Get a list of ArXiv paper metrics from the database
+      parameters:
+        - name: jargon_id
+          in: path
+          description: Jargon term identifier
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: ArXiv paper latest metrics JSON records
+          content:
+            application/json:
+              schema:
+                type: array
+                items: JargonPaperMetricsSchema
     """
 
     metrics = service.jargon_paper_metrics.get_latest_by_jargon(jargon_id)
