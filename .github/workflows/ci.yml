@@ -45,7 +45,7 @@ jobs:
       with:
         python-version: 3.7
     - name: "Set up private packages SSH keys"
-      uses: webfactory/ssh-agent@v0.5.3
+      uses: webfactory/ssh-agent@v0.5.4
       with:
         ssh-private-key: |
           ${{ secrets.DM_CORE_SSH_KEY }}
@@ -69,7 +69,7 @@ jobs:
 #    - name: "Set up GitHub Actions"
 #      uses: actions/checkout@v2
 #    - name: "Set up private packages SSH keys"
-#      uses: webfactory/ssh-agent@v0.5.3
+#      uses: webfactory/ssh-agent@v0.5.4
 #      with:
 #        ssh-private-key: |
 #          ${{ secrets.DM_CORE_SSH_KEY }}
