@@ -31,6 +31,13 @@ make check
 ```
 
 
+### Testing
+Project testing is performed using [Pytest][web-pytest]. In order to run the tests:
+```sh
+make test
+```
+
+
 ### Docker
 There is a `Makefile` to perform both Docker `build` and `push` operations.
 
@@ -76,3 +83,4 @@ This project uses a set of env. variables to configure certain aspects of the AP
 [dialect-map-ui]: https://github.com/dialect-map/dialect-map-ui
 [docs-gcloud-cli]: https://cloud.google.com/sdk/docs/install
 [web-black]: https://black.readthedocs.io/en/stable/
+[web-pytest]: https://docs.pytest.org/en/latest/#
