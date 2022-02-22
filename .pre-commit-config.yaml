@@ -13,8 +13,13 @@ repos:
     rev: v0.931
     hooks:
     -   id: mypy
-        name: "Python types analyzer"
+        name: "Python types analyzer (source)"
         args: ["src"]
         language: python
         pass_filenames: false
         additional_dependencies: ["flask ~= 2.0.0"]
+    -   id: mypy
+        name: "Python types analyzer (tests)"
+        args: ["tests"]
+        language: python
+        pass_filenames: false
