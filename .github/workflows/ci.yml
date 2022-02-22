@@ -42,10 +42,37 @@ jobs:
       run: |
         make check
 
+  test:
+    needs: [lint]
+    runs-on: ubuntu-latest
+    steps:
+    - name: "Set up GitHub Actions"
+      uses: actions/checkout@v2
+    - name: "Set up Python 3.7"
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.7
+    - name: "Set up private packages SSH keys"
+      uses: webfactory/ssh-agent@v0.5.4
+      with:
+        ssh-private-key: |
+          ${{ secrets.DM_CORE_SSH_KEY }}
+          ${{ secrets.DM_SCHEMAS_SSH_KEY }}
+    - name: "Install Python dependencies"
+      run: |
+        pip install --no-cache-dir --upgrade pip setuptools wheel
+        pip install --no-cache-dir --requirement reqs/requirements-prod.txt
+        pip install --no-cache-dir --requirement reqs/requirements-spec.txt
+        pip install --no-cache-dir --requirement reqs/requirements-test.txt
+        pip list
+    - name: "Test with pytest"
+      run: |
+        make test
+
 #  ONLY POSSIBLE WHEN PROJECT GOES PUBLIC
 #
 #  build:
-#    needs: [lint]
+#    needs: [test]
 #    runs-on: ubuntu-latest
 #    steps:
 #    - name: "Set up GitHub Actions"

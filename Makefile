@@ -1,6 +1,8 @@
 APP_VERSION    = $(shell cat VERSION)
 IMAGE_NAME     = "dialect-map-public-api"
 SOURCE_FOLDER  = "src"
+TESTS_FOLDER   = "tests"
+TESTS_PARAMS   = "-p no:cacheprovider"
 
 GCP_PROJECT   ?= "ds3-dialect-map"
 GCP_REGISTRY  ?= "us.gcr.io"
@@ -19,8 +21,10 @@ build:
 check:
 	@echo "Checking code format"
 	@black --check $(SOURCE_FOLDER)
+	@black --check $(TESTS_FOLDER)
 	@echo "Checking type annotations"
 	@mypy $(SOURCE_FOLDER)
+	@mypy $(TESTS_FOLDER)
 
 
 .PHONY: install-dev
@@ -36,3 +40,9 @@ push: build
 	@docker tag $(IMAGE_NAME):$(APP_VERSION) $(GCP_IMAGE_NAME):$(APP_VERSION)
 	@docker push $(GCP_IMAGE_NAME):$(APP_VERSION)
 	@docker rmi $(GCP_IMAGE_NAME):$(APP_VERSION)
+
+
+.PHONY: test
+test:
+	@echo "Testing code"
+	@pytest "$(TESTS_PARAMS)"

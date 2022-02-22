@@ -2,6 +2,7 @@
 
 try:
     from .__help import bp as blueprint_help
+    from .__help import build_openapi_spec
 except ImportError:
     pass
 
