@@ -17,7 +17,7 @@ def get_membership(membership_id: str):
     Category membership endpoint
     ---
     get:
-      description: Get an category membership from the database
+      description: Get a category membership from the database
       parameters:
         - name: membership_id
           in: path
