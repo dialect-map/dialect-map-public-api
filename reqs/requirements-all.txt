@@ -1,5 +1,6 @@
 -r requirements-lint.txt
 -r requirements-prod.txt
 -r requirements-spec.txt
+-r requirements-test.txt
 
 pre-commit==2.17.0
