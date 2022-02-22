@@ -8,7 +8,7 @@ from dialect_map.storage import SQLAlchemyDatabase
 from .config import ApplicationConfig
 
 
-service: ApplicationService
+service: ApplicationService = ...
 
 
 def setup_service(c: ApplicationConfig):
