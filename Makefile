@@ -20,11 +20,8 @@ build:
 .PHONY: check
 check:
 	@echo "Checking code format"
-	@black --check $(SOURCE_FOLDER)
-	@black --check $(TESTS_FOLDER)
-	@echo "Checking type annotations"
-	@mypy $(SOURCE_FOLDER)
-	@mypy $(TESTS_FOLDER)
+	@black --check $(SOURCE_FOLDER) $(TESTS_FOLDER)
+	@mypy --pretty $(SOURCE_FOLDER) $(TESTS_FOLDER)
 
 
 .PHONY: install-dev
