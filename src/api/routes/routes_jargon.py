@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
+from urllib import parse
+
 from flask import Blueprint
 from flask import jsonify
 from flask import request
-from urllib import parse
 
 from dialect_map_schemas import JargonSchema
 from dialect_map_schemas import JargonGroupSchema

@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from flask import Blueprint
-from flask import current_app
-from flask import jsonify
 from functools import lru_cache
 from pathlib import Path
 
 from apispec.core import APISpec
 from apispec.ext.marshmallow import MarshmallowPlugin
 from apispec_webframeworks.flask import FlaskPlugin
+
+from flask import Blueprint
+from flask import current_app
+from flask import jsonify
 
 
 bp = Blueprint("help", __name__)

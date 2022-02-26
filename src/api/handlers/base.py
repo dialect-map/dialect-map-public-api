@@ -2,9 +2,11 @@
 
 import logging
 
+from typing import Tuple
+
 from flask import jsonify
 from flask import Response
-from typing import Tuple
+
 
 logger = logging.getLogger()
 
