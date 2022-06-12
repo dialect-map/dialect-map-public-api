@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from flask import Blueprint
+from flask import g
 from flask import jsonify
 
+from dialect_map_core import JargonCategoryMetricsController
+from dialect_map_core import JargonPaperMetricsController
 from dialect_map_schemas import JargonCategoryMetricsSchema
 from dialect_map_schemas import JargonPaperMetricsSchema
-
-from ..globals import service
 
 
 bp = Blueprint("metrics", __name__)
@@ -37,7 +38,9 @@ def get_cat_metrics(metric_id: str):
               schema: JargonCategoryMetricsSchema
     """
 
-    metric = service.jargon_cat_metrics.get(metric_id)
+    controller = JargonCategoryMetricsController(g.session)
+
+    metric = controller.get(metric_id)
     schema = JargonCategoryMetricsSchema()
     record = schema.dump(metric)
 
@@ -75,7 +78,9 @@ def get_category_metrics_by_jargon(jargon_id: str, category_id: str = None):
                 items: JargonCategoryMetricsSchema
     """
 
-    metrics = service.jargon_cat_metrics.get_by_jargon(jargon_id, category_id)
+    controller = JargonCategoryMetricsController(g.session)
+
+    metrics = controller.get_by_jargon(jargon_id, category_id)
     schemas = JargonCategoryMetricsSchema(many=True)
     records = schemas.dump(metrics)
 
@@ -107,7 +112,9 @@ def get_paper_metrics(metric_id: str):
               schema: JargonPaperMetricsSchema
     """
 
-    metric = service.jargon_paper_metrics.get(metric_id)
+    controller = JargonPaperMetricsController(g.session)
+
+    metric = controller.get(metric_id)
     schema = JargonPaperMetricsSchema()
     record = schema.dump(metric)
 
@@ -152,7 +159,9 @@ def get_paper_metrics_by_jargon(jargon_id: str, paper_id: str = None, paper_rev:
                 items: JargonPaperMetricsSchema
     """
 
-    metrics = service.jargon_paper_metrics.get_by_jargon(jargon_id, paper_id, paper_rev)
+    controller = JargonPaperMetricsController(g.session)
+
+    metrics = controller.get_by_jargon(jargon_id, paper_id, paper_rev)
     schemas = JargonPaperMetricsSchema(many=True)
     records = schemas.dump(metrics)
 
@@ -183,7 +192,9 @@ def get_latest_paper_metrics(jargon_id: str):
                 items: JargonPaperMetricsSchema
     """
 
-    metrics = service.jargon_paper_metrics.get_latest_by_jargon(jargon_id)
+    controller = JargonPaperMetricsController(g.session)
+
+    metrics = controller.get_latest_by_jargon(jargon_id)
     schemas = JargonPaperMetricsSchema(many=True)
     records = schemas.dump(metrics)
 
