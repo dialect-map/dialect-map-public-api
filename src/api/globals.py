@@ -2,27 +2,21 @@
 
 import atexit
 
-from dialect_map.service import ApplicationService
-from dialect_map.storage import SQLAlchemyDatabase
-from dialect_map.storage import SQLDatabaseContext
-
-from .config import ApplicationConfig
+from dialect_map_core.storage import SQLDatabase
 
 
-service: ApplicationService = ...
+database: SQLDatabase = ...
 
 
-def setup_service(c: ApplicationConfig):
+def setup_database(connection_url: str):
     """
-    Setup the global application service
-    :param c: global application configuration
+    Setup the global application database
+    :param connection_url: database connection URL
     """
 
-    global service
+    global database
 
-    engine = SQLAlchemyDatabase(c.database_url)
-    context = SQLDatabaseContext(engine)
-    service = ApplicationService(engine, context)
+    database = SQLDatabase(connection_url)
 
     # Register the service cleanup function upon exiting
-    atexit.register(service.stop)
+    atexit.register(database.close_connection)

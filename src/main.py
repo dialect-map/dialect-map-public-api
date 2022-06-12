@@ -7,7 +7,7 @@ from flask_cors import CORS
 
 from api.config import ApplicationConfig
 from api.config import EnvironmentConfigLoader
-from api.globals import setup_service
+from api.globals import setup_database
 from logs import setup_logger
 
 
@@ -61,7 +61,7 @@ if __name__ == "main":
     config = ApplicationConfig(loader)
 
     setup_logger(config.log_level)
-    setup_service(c=config)
+    setup_database(config.database_url)
 
     create_app()
 
@@ -73,6 +73,6 @@ if __name__ == "__main__":
     config = ApplicationConfig(loader)
 
     setup_logger(config.log_level)
-    setup_service(c=config)
+    setup_database(config.database_url)
 
     create_app()
