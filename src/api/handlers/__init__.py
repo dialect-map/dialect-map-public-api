@@ -2,7 +2,8 @@
 
 import json
 
-from .context import clean_session
+from .context import create_session
+from .context import remove_session
 from .errors import *
 
 

@@ -18,7 +18,8 @@ cors = CORS(app, methods=["GET"])
 def create_app():
     """Initializes the Flask application entity"""
 
-    from api.handlers import clean_session
+    from api.handlers import create_session
+    from api.handlers import remove_session
     from api.handlers import error_mappings
     from api.routes import all_blueprints
 
@@ -35,7 +36,8 @@ def create_app():
             app.register_error_handler(error, mapping["handler"])
 
     # Setup all the context handlers
-    app.teardown_request(clean_session)
+    app.before_request(create_session)
+    app.after_request(remove_session)
 
 
 def setup_help_blueprint():
