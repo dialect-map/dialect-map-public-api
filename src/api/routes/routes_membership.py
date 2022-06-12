@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from flask import Blueprint
+from flask import g
 from flask import jsonify
 
+from dialect_map_core import MembershipController
 from dialect_map_schemas import CategoryMembershipSchema
-
-from ..globals import service
 
 
 bp = Blueprint("memberships", __name__)
@@ -33,9 +33,11 @@ def get_membership(membership_id: str):
               schema: CategoryMembershipSchema
     """
 
-    member = service.category_memberships.get(membership_id)
+    controller = MembershipController(g.session)
+
+    membership = controller.get(membership_id)
     schema = CategoryMembershipSchema()
-    record = schema.dump(member)
+    record = schema.dump(membership)
 
     return jsonify(record), 200
 
@@ -70,8 +72,10 @@ def get_membership_by_paper(paper_id: str, paper_rev: int):
                 items: CategoryMembershipSchema
     """
 
-    members = service.category_memberships.get_by_paper(paper_id, paper_rev)
+    controller = MembershipController(g.session)
+
+    memberships = controller.get_by_paper(paper_id, paper_rev)
     schemas = CategoryMembershipSchema(many=True)
-    records = schemas.dump(members)
+    records = schemas.dump(memberships)
 
     return jsonify(records), 200
