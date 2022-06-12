@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 
 from flask import Blueprint
+from flask import g
 from flask import jsonify
 
+from dialect_map_core import PaperController
+from dialect_map_core import PaperAuthorController
+from dialect_map_core import PaperReferenceCountersController
 from dialect_map_schemas import PaperSchema
 from dialect_map_schemas import PaperAuthorSchema
 from dialect_map_schemas import PaperReferenceCountersSchema
-
-from ..globals import service
 
 
 bp = Blueprint("papers", __name__)
@@ -44,7 +46,9 @@ def get_paper(paper_id: str, paper_rev: int):
               schema: PaperSchema
     """
 
-    paper = service.papers.get(paper_id, paper_rev)
+    controller = PaperController(g.session)
+
+    paper = controller.get(paper_id, paper_rev)
     schema = PaperSchema()
     record = schema.dump(paper)
 
@@ -76,7 +80,9 @@ def get_paper_author(author_id: str):
               schema: PaperAuthorSchema
     """
 
-    author = service.paper_authors.get(author_id)
+    controller = PaperAuthorController(g.session)
+
+    author = controller.get(author_id)
     schema = PaperAuthorSchema()
     record = schema.dump(author)
 
@@ -113,7 +119,9 @@ def get_paper_authors_by_paper(paper_id: str, paper_rev: int):
                 items: PaperAuthorSchema
     """
 
-    authors = service.paper_authors.get_by_paper(paper_id, paper_rev)
+    controller = PaperAuthorController(g.session)
+
+    authors = controller.get_by_paper(paper_id, paper_rev)
     schemas = PaperAuthorSchema(many=True)
     records = schemas.dump(authors)
 
@@ -145,7 +153,9 @@ def get_ref_counter(counter_id: str):
               schema: PaperReferenceCountersSchema
     """
 
-    counter = service.paper_ref_counters.get(counter_id)
+    controller = PaperReferenceCountersController(g.session)
+
+    counter = controller.get(counter_id)
     schema = PaperReferenceCountersSchema()
     record = schema.dump(counter)
 
@@ -182,7 +192,9 @@ def get_ref_counter_by_paper(paper_id: str, paper_rev: int):
                 items: PaperReferenceCountersSchema
     """
 
-    counters = service.paper_ref_counters.get_by_paper(paper_id, paper_rev)
+    controller = PaperReferenceCountersController(g.session)
+
+    counters = controller.get_by_paper(paper_id, paper_rev)
     schemas = PaperReferenceCountersSchema(many=True)
     records = schemas.dump(counters)
 
