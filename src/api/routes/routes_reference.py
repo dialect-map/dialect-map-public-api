@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from flask import Blueprint
+from flask import g
 from flask import jsonify
 
+from dialect_map_core import ReferenceController
 from dialect_map_schemas import PaperReferenceSchema
-
-from ..globals import service
 
 
 bp = Blueprint("references", __name__)
@@ -33,7 +33,9 @@ def get_reference(reference_id: str):
               schema: PaperReferenceSchema
     """
 
-    ref = service.paper_refs.get(reference_id)
+    controller = ReferenceController(g.session)
+
+    ref = controller.get(reference_id)
     schema = PaperReferenceSchema()
     record = schema.dump(ref)
 
@@ -70,7 +72,9 @@ def get_references_by_source_paper(paper_id: str, paper_rev: int):
                 items: PaperReferenceSchema
     """
 
-    refs = service.paper_refs.get_by_source_paper(paper_id, paper_rev)
+    controller = ReferenceController(g.session)
+
+    refs = controller.get_by_source_paper(paper_id, paper_rev)
     schemas = PaperReferenceSchema(many=True)
     records = schemas.dump(refs)
 
@@ -107,7 +111,9 @@ def get_references_by_target_paper(paper_id: str, paper_rev: int):
                 items: PaperReferenceSchema
     """
 
-    refs = service.paper_refs.get_by_target_paper(paper_id, paper_rev)
+    controller = ReferenceController(g.session)
+
+    refs = controller.get_by_target_paper(paper_id, paper_rev)
     schemas = PaperReferenceSchema(many=True)
     records = schemas.dump(refs)
 
