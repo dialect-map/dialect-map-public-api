@@ -2,7 +2,18 @@
 
 from functools import partial
 
+from typing import Callable
+from typing import List
+from typing import NamedTuple
+
 from .base import error_handler
+
+
+class ErrorMapping(NamedTuple):
+    """Model for the Flask error handler tuples"""
+
+    handler: Callable
+    errors: List
 
 
 # Error handler returning HTTP code 400
