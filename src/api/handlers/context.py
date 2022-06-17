@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from flask import Response
+from flask import current_app
 from flask import g
-
-from ..globals import database
 
 
 def create_session() -> None:
@@ -11,7 +10,10 @@ def create_session() -> None:
     Request setup handler for creating sessions
     """
 
-    g.session = database.create_session()
+    database = current_app.extensions["database"]
+    session = database.create_session()
+
+    g.session = session
 
 
 def remove_session(resp: Response) -> Response:
