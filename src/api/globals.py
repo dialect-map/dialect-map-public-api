@@ -1,22 +1,13 @@
 # -*- coding: utf-8 -*-
 
-import atexit
-
 from dialect_map_core.storage import SQLDatabase
 
 
-database: SQLDatabase = ...
-
-
-def setup_database(connection_url: str):
+def create_database(connection_url: str) -> SQLDatabase:
     """
-    Setup the global application database
+    Creates the global application database instance
     :param connection_url: database connection URL
+    :return: database connection instance
     """
 
-    global database
-
-    database = SQLDatabase(connection_url)
-
-    # Register the service cleanup function upon exiting
-    atexit.register(database.close_connection)
+    return SQLDatabase(connection_url)
