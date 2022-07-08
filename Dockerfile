@@ -1,9 +1,8 @@
 # Base image
 FROM python:3.9-slim
 
-# Set working directory and copy files
+# Set working directory
 WORKDIR /app
-COPY . /app
 
 
 # Install binary dependencies
@@ -15,14 +14,20 @@ RUN mkdir -p -m 0600 ~/.ssh && \
     ssh-keyscan github.com >> ~/.ssh/known_hosts
 
 
+# Copy Python dependency files
+COPY ./reqs /app/reqs
+
 # Install Python dependencies
 RUN --mount=type=ssh \
     pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir --requirement reqs/requirements-prod.txt && \
     pip install --no-cache-dir --requirement reqs/requirements-spec.txt
 
+# Copy all files
+COPY . /app
 
-# Tell Docker about the port the application will expose
+
+# State application exposed port
 EXPOSE 8080
 
 # Start server
