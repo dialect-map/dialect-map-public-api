@@ -18,7 +18,8 @@ given the papers categorization over a pair of user specified jargon words frequ
 Python dependencies are specified on the multiple files within the `reqs` directory.
 
 In order to install all the development packages, as long as the defined commit hooks:
-```sh
+
+```shell
 make install-dev
 ```
 
@@ -26,36 +27,45 @@ make install-dev
 ### Formatting
 All Python files are formatted using [Black][web-black], and the custom properties defined
 in the `pyproject.toml` file.
-```sh
+
+```shell
 make check
 ```
 
 
 ### Testing
 Project testing is performed using [Pytest][web-pytest]. In order to run the tests:
-```sh
+
+```shell
 make test
 ```
 
 
 ### Docker
-There is a `Makefile` to perform both Docker `build` and `push` operations.
+The project is currently designed to be deployed in a Google Cloud Platform project,
+so the initial step involves using [gcloud][docs-gcloud-cli] CLI tool to log into it:
 
-The project is currently designed to be deployed in the _DS3-Dialect-Map_ GCP project,
-so the initial step involves using [gcloud][docs-gcloud-cli] CLI tool to log in with GCP:
-
-```sh
+```shell
 gcloud login
 gcloud auth configure-docker
 ```
 
-In order to build a Docker image out of the project:
-```sh
+In addition, macOS requires developers to have their identity keys added to the SSH agent
+in order for Docker to pick up those keys when building the image with the `--ssh default` flag.
+
+```shell
+ssh-add -K
+```
+
+To build a Docker image out of the project:
+
+```shell
 make build
 ```
 
-To push the image to the GCP registry:
-```sh
+To push a Docker image to the GCP registry:
+
+```shell
 export GCP_PROJECT="ds3-dialect-map"
 export GCP_REGISTRY="us.gcr.io"
 make push
