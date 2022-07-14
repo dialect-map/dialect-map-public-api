@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from flask import Blueprint
+from flask import g
 from flask import jsonify
 from flask import request
 
+from dialect_map_core import CategoryController
 from dialect_map_schemas import CategorySchema
-
-from ..globals import service
 
 
 bp = Blueprint("categories", __name__)
@@ -34,7 +34,9 @@ def get_category(category_id: str):
               schema: CategorySchema
     """
 
-    category = service.categories.get(category_id)
+    controller = CategoryController(g.session)
+
+    category = controller.get(category_id)
     schema = CategorySchema()
     record = schema.dump(category)
 
@@ -71,7 +73,9 @@ def get_category_all():
         default=False,
     )
 
-    categories = service.categories.get_all(include_archived)
+    controller = CategoryController(g.session)
+
+    categories = controller.get_all(include_archived)
     schemas = CategorySchema(many=True)
     records = schemas.dump(categories)
 

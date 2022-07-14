@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from flask import Flask
 from openapi_spec_validator import validate_v3_spec
 
-from src.api.routes import all_blueprints
+from src.api.factory import create_app
 from src.api.routes import build_openapi_spec
 
 
@@ -13,11 +12,7 @@ def test_openapi_spec():
     Reference: https://swagger.io/specification/
     """
 
-    app = Flask(__name__)
-
-    # Setup all the blueprint routes
-    for bp in all_blueprints:
-        app.register_blueprint(bp)
+    app = create_app("sqlite:///:memory:")
 
     # Simulate a running application
     with app.app_context():

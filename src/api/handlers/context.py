@@ -1,14 +1,27 @@
 # -*- coding: utf-8 -*-
 
-from ..globals import service
+from flask import Response
+from flask import current_app
+from flask import g
 
 
-def clean_session(error: Exception) -> None:
+def create_session() -> None:
     """
-    Request teardown handler for cleaning sessions.
-    This is particularly relevant when using 'scoped-sessions'
-    Ref: https://docs.sqlalchemy.org/en/14/orm/contextual.html
-    :param error: exception to be dealt with (optional)
+    Request setup handler for creating sessions
     """
 
-    service.db.close_session()
+    database = current_app.extensions["database"]
+    session = database.create_session()
+
+    g.session = session
+
+
+def remove_session(resp: Response) -> Response:
+    """
+    Request teardown handler for closing sessions.
+    :param resp: request response
+    """
+
+    g.session.close()
+
+    return resp

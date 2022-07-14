@@ -3,13 +3,14 @@
 from urllib import parse
 
 from flask import Blueprint
+from flask import g
 from flask import jsonify
 from flask import request
 
+from dialect_map_core import JargonController
+from dialect_map_core import JargonGroupController
 from dialect_map_schemas import JargonSchema
 from dialect_map_schemas import JargonGroupSchema
-
-from ..globals import service
 
 
 bp = Blueprint("jargons", __name__)
@@ -40,7 +41,9 @@ def get_jargon(jargon_id: str):
               schema: JargonSchema
     """
 
-    jargon = service.jargons.get(jargon_id)
+    controller = JargonController(g.session)
+
+    jargon = controller.get(jargon_id)
     schema = JargonSchema()
     record = schema.dump(jargon)
 
@@ -77,7 +80,9 @@ def get_jargon_all():
         default=False,
     )
 
-    jargons = service.jargons.get_all(include_archived)
+    controller = JargonController(g.session)
+
+    jargons = controller.get_all(include_archived)
     schemas = JargonSchema(many=True)
     records = schemas.dump(jargons)
 
@@ -108,10 +113,12 @@ def get_jargon_by_string(jargon_str: str):
           description: Jargon term not found
     """
 
+    controller = JargonController(g.session)
+
     string = parse.unquote(jargon_str)
     string = string.lower()
 
-    jargon = service.jargons.get_by_string(string)
+    jargon = controller.get_by_string(string)
 
     if jargon:
         schema = JargonSchema()
@@ -145,7 +152,9 @@ def get_jargon_by_group(group_id: str):
                 items: JargonSchema
     """
 
-    jargons = service.jargons.get_by_group(group_id)
+    controller = JargonController(g.session)
+
+    jargons = controller.get_by_group(group_id)
     schemas = JargonSchema(many=True)
     records = schemas.dump(jargons)
 
@@ -177,7 +186,9 @@ def get_jargon_group(group_id: str):
               schema: JargonGroupSchema
     """
 
-    group = service.jargon_groups.get(group_id)
+    controller = JargonGroupController(g.session)
+
+    group = controller.get(group_id)
     schema = JargonGroupSchema()
     record = schema.dump(group)
 
