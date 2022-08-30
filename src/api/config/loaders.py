@@ -5,7 +5,6 @@ import os
 from abc import ABC
 from abc import abstractmethod
 from typing import Any
-from typing import Union
 
 
 class ConfigLoader(ABC):
@@ -62,7 +61,7 @@ class EnvironmentConfigLoader(ConfigLoader):
 
         return self._parse_value(data_type, name, default)
 
-    def load_arguments(self, args: Union[dict, tuple]) -> dict:
+    def load_arguments(self, args: dict | tuple) -> dict:
         """
         Recursive function to load multiple arguments from the OS env.
         :param args: structure of defined arguments
