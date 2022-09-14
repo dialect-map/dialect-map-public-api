@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from openapi_spec_validator import validate_v3_spec
+from openapi_spec_validator import validate_spec
 
 from src.api.factory import create_app
 from src.api.routes import build_openapi_spec
@@ -16,4 +16,4 @@ def test_openapi_spec():
 
     # Simulate a running application
     with app.app_context():
-        validate_v3_spec(build_openapi_spec())
+        validate_spec(build_openapi_spec())
