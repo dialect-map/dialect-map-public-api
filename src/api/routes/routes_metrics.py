@@ -49,7 +49,7 @@ def get_cat_metrics(metric_id: str):
 
 @bp.get("/category-metrics/jargon/<jargon_id>")
 @bp.get("/category-metrics/jargon/<jargon_id>/<category_id>")
-def get_category_metrics_by_jargon(jargon_id: str, category_id: str = None):
+def get_category_metrics_by_jargon(jargon_id: str, category_id: str | None = None):
     """
     ArXiv category metrics by jargon endpoint
     ---
@@ -124,7 +124,11 @@ def get_paper_metrics(metric_id: str):
 @bp.get("/paper-metrics/jargon/<jargon_id>")
 @bp.get("/paper-metrics/jargon/<jargon_id>/<path:paper_id>")
 @bp.get("/paper-metrics/jargon/<jargon_id>/<path:paper_id>/rev/<int:paper_rev>")
-def get_paper_metrics_by_jargon(jargon_id: str, paper_id: str = None, paper_rev: int = None):
+def get_paper_metrics_by_jargon(
+    jargon_id: str,
+    paper_id: str | None = None,
+    paper_rev: int | None = None,
+):
     """
     ArXiv paper metrics by jargon endpoint
     ---
