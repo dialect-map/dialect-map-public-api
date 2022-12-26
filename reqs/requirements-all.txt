@@ -3,4 +3,4 @@
 -r requirements-spec.txt
 -r requirements-test.txt
 
-pre-commit==2.20.0
+pre-commit==2.21.0
