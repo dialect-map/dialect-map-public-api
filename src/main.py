@@ -8,8 +8,8 @@ from api.factory import create_app
 from logs import setup_logger
 
 
-# Gunicorn running the server
 if __name__ == "main":
+    """Gunicorn running the server"""
 
     loader = EnvironmentConfigLoader()
     config = ApplicationConfig(loader)
@@ -20,8 +20,8 @@ if __name__ == "main":
     cors = CORS(app, methods=["GET"])
 
 
-# Flask running the server
 if __name__ == "__main__":
+    """Flask running the server"""
 
     loader = EnvironmentConfigLoader()
     config = ApplicationConfig(loader)
