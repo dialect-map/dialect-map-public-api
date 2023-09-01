@@ -20,7 +20,7 @@ COPY ./reqs /app/reqs
 # Install Python dependencies
 RUN --mount=type=ssh \
     pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir --requirement reqs/requirements-prod.txt && \
+    pip install --no-cache-dir --requirement reqs/requirements-main.txt && \
     pip install --no-cache-dir --requirement reqs/requirements-spec.txt
 
 # Copy all files

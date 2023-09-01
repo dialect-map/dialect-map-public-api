@@ -1,5 +1,5 @@
 -r requirements-lint.txt
--r requirements-prod.txt
+-r requirements-main.txt
 -r requirements-spec.txt
 -r requirements-test.txt
 
