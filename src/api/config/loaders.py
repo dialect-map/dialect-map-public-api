@@ -5,6 +5,7 @@ import os
 from abc import ABC
 from abc import abstractmethod
 from typing import Any
+from typing import override
 
 
 class ConfigLoader(ABC):
@@ -50,6 +51,7 @@ class EnvironmentConfigLoader(ConfigLoader):
         value = data_type(value)
         return value
 
+    @override
     def load_argument(self, data_type: type, name: str, default: Any) -> Any:
         """
         Loads a single argument from the OS env.
@@ -61,6 +63,7 @@ class EnvironmentConfigLoader(ConfigLoader):
 
         return self._parse_value(data_type, name, default)
 
+    @override
     def load_arguments(self, args: dict | tuple) -> dict:
         """
         Recursive function to load multiple arguments from the OS env.
