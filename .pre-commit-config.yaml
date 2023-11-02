@@ -24,4 +24,4 @@ repos:
         args: ["src", "tests"]
         language: python
         pass_filenames: false
-        additional_dependencies: ["flask ~= 2.3.0"]
+        additional_dependencies: ["flask ~= 3.0.0"]
